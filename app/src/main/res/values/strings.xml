@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Test Library</string>
+    <string name="take_picture">Take Picture</string>
+</resources>
