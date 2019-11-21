@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.view.View;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 
@@ -49,5 +50,19 @@ public class MapActivity extends AppCompatActivity {
 //                { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
 //                { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 //        dj.dijkstra(adjacencyMatrix, 0);
+    }
+
+    public void goUpstair(View v){
+        PinView imageView = (PinView)findViewById(R.id.imageView);
+        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        PointF start = new PointF(1500, 500);
+        PointF destination = new PointF(500, 2000);
+        PointF[] array = {start, new PointF(1500, 1500), destination};
+        imageView.setPin(start, destination);
+        imageView.setRoute(array);
+    }
+
+    public void goDownstair(View v){
+
     }
 }
