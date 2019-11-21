@@ -1,6 +1,7 @@
 package com.example.testlibrary
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ class BarcodeScanCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHa
         initScannerView()
         initDefaultView()
         button_reset.setOnClickListener(this)
+        buttonNext.setOnClickListener(this)
     }
 
     private fun initScannerView() {
@@ -66,6 +68,9 @@ class BarcodeScanCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHa
     }
 
     override fun handleResult(rawResult: Result?) {
+        //get result if the qrcode contain our information then intent to next page
+        val intent = Intent(this,SelectDestination::class.java)
+        startActivity(intent)
         text_view_qr_code_value.text = rawResult?.text
         button_reset.visibility = View.VISIBLE
     }
@@ -76,8 +81,13 @@ class BarcodeScanCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHa
                 mScannerView.resumeCameraPreview(this)
                 initDefaultView()
             }
+            //Temporary code
+            R.id.buttonNext-> {
+                val intent = Intent(this,SelectDestination::class.java)
+                startActivity(intent)
+            }
             else -> {
-                /* nothing to do in here */
+                // Do nothing
             }
         }
     }
