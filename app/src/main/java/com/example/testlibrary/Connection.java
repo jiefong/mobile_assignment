@@ -4,10 +4,10 @@ import android.graphics.PointF;
 
 public class Connection {
 
-    private Location location_1;
-    private Location location_2;
+    private LocationInfo location_1;
+    private LocationInfo location_2;
 
-    public Connection(Location location_1, Location location_2){
+    public Connection(LocationInfo location_1, LocationInfo location_2){
         this.location_1 = location_1;
         this.location_2 = location_2;
     }
@@ -22,15 +22,15 @@ public class Connection {
         return distance;
     }
 
-    public Location getLocation1(){
+    public LocationInfo getLocation1(){
         return location_1;
     }
 
-    public Location getLocation2(){
+    public LocationInfo getLocation2(){
         return location_2;
     }
 
-    public boolean checkLocationConnection(Location location){
+    public boolean checkLocationConnection(LocationInfo location){
         if(location_1 == location || location_2 == location)
             return true;
         return false;
