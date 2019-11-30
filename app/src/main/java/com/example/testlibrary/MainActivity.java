@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         myRef.child("example").setValue(info);
 
 
-        // Read from the database using this listener
+        // Read data from the database using this listener
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
