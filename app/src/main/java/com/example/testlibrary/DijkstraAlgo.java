@@ -12,6 +12,8 @@ package com.example.testlibrary;
 // adjacency matrix representation
 // of the graph.
 
+import java.util.ArrayList;
+
 public class DijkstraAlgo {
 
     public DijkstraAlgo() {
@@ -24,9 +26,8 @@ public class DijkstraAlgo {
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    public void dijkstra(float[][] adjacencyMatrix,
-                                 int startVertex)
-    {
+    public ArrayList dijkstra(float[][] adjacencyMatrix,
+                         int startVertex) {
         int nVertices = adjacencyMatrix[0].length;
 
         // shortestDistances[i] will hold the
@@ -42,8 +43,7 @@ public class DijkstraAlgo {
         // Initialize all distances as
         // INFINITE and added[] as false
         for (int vertexIndex = 0; vertexIndex < nVertices;
-             vertexIndex++)
-        {
+             vertexIndex++) {
             shortestDistances[vertexIndex] = Float.MAX_VALUE;
             added[vertexIndex] = false;
         }
@@ -62,8 +62,7 @@ public class DijkstraAlgo {
 
         // Find shortest path for all
         // vertices
-        for (int i = 1; i < nVertices; i++)
-        {
+        for (int i = 1; i < nVertices; i++) {
 
             // Pick the minimum distance vertex
             // from the set of vertices not yet
@@ -74,12 +73,10 @@ public class DijkstraAlgo {
             float shortestDistance = Float.MAX_VALUE;
             for (int vertexIndex = 0;
                  vertexIndex < nVertices;
-                 vertexIndex++)
-            {
+                 vertexIndex++) {
                 if (!added[vertexIndex] &&
                         shortestDistances[vertexIndex] <
-                                shortestDistance)
-                {
+                                shortestDistance) {
                     nearestVertex = vertexIndex;
                     shortestDistance = shortestDistances[vertexIndex];
                 }
@@ -94,14 +91,12 @@ public class DijkstraAlgo {
             // picked vertex.
             for (int vertexIndex = 0;
                  vertexIndex < nVertices;
-                 vertexIndex++)
-            {
+                 vertexIndex++) {
                 float edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex];
 
                 if (edgeDistance > 0
                         && ((shortestDistance + edgeDistance) <
-                        shortestDistances[vertexIndex]))
-                {
+                        shortestDistances[vertexIndex])) {
                     parents[vertexIndex] = nearestVertex;
                     shortestDistances[vertexIndex] = shortestDistance +
                             edgeDistance;
@@ -109,25 +104,25 @@ public class DijkstraAlgo {
             }
         }
 
-        printSolution(startVertex, shortestDistances, parents);
+//        printSolution(startVertex, shortestDistances, parents);
+        ArrayList list = printSolution1(startVertex, 5, shortestDistances, parents);
+        return list;
     }
+
 
     // A utility function to print
     // the constructed distances
     // array and shortest paths
     private void printSolution(int startVertex,
-                                      float[] distances,
-                                      int[] parents)
-    {
+                               float[] distances,
+                               int[] parents) {
         int nVertices = distances.length;
         System.out.print("Vertex\t Distance\tPath");
 
         for (int vertexIndex = 0;
              vertexIndex < nVertices;
-             vertexIndex++)
-        {
-            if (vertexIndex != startVertex)
-            {
+             vertexIndex++) {
+            if (vertexIndex != startVertex) {
                 System.out.print("\n" + startVertex + " -> ");
                 System.out.print(vertexIndex + " \t\t ");
                 System.out.print(distances[vertexIndex] + "\t\t");
@@ -136,21 +131,43 @@ public class DijkstraAlgo {
         }
     }
 
+    private ArrayList printSolution1(int startVertex,
+                                int endVertex,
+                                float[] distances,
+                                int[] parents) {
+
+        ArrayList<Integer> arr = returnPath(endVertex, parents, new ArrayList<Integer>());
+        return arr;
+    }
+
     // Function to print shortest path
     // from source to currentVertex
     private void printPath(int currentVertex,
-                                  int[] parents)
-    {
+                           int[] parents) {
 
         // Base case : Source node has
         // been processed
-        if (currentVertex == NO_PARENT)
-        {
+        if (currentVertex == NO_PARENT) {
             return;
         }
         printPath(parents[currentVertex], parents);
+
         System.out.print(currentVertex + " ");
     }
+    // Function to print shortest path
+    // from source to currentVertex
+    private ArrayList<Integer> returnPath(int currentVertex,
+                                          int[] parents, ArrayList<Integer> list) {
 
+        // Base case : Source node has
+        // been processed
+        if (currentVertex == NO_PARENT) {
+            return list;
+        }
+        returnPath(parents[currentVertex], parents, list);
+        list.add(currentVertex);
+
+        return list;
+    }
 }
 

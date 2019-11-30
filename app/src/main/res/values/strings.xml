@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Test Library</string>
     <string name="take_picture">Take Picture</string>
+    <string name="goUpstair">Go upstair</string>
+    <string name="goDownStair">Go downstair</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

@@ -8,6 +8,8 @@ import android.view.View;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
 
+import java.util.ArrayList;
+
 public class MapActivity extends AppCompatActivity {
 
     @Override
@@ -39,17 +41,22 @@ public class MapActivity extends AppCompatActivity {
         //TODO draw into the map
 
 //        Dijsktra algo
-//        DijkstraAlgo dj = new DijkstraAlgo();
-//        float[][] adjacencyMatrix = { { 0, 0.2, 0, 0, 0, 0, 0, 8, 0 },
-//                { 0.11, 0, 8, 0, 0, 0, 0, 11, 0 },
-//                { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
-//                { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
-//                { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
-//                { 0, 0, 4, 0, 10, 0, 2, 0, 0 },
-//                { 0, 0, 0, 14, 0, 2, 0, 1, 6 },
-//                { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
-//                { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
-//        dj.dijkstra(adjacencyMatrix, 0);
+        DijkstraAlgo dj = new DijkstraAlgo();
+        float[][] adjacencyMatrix = { { 0, (float)0.2, 0, 0, 0, 0, 0, 8, 0 },
+                { (float)0.11, 0, 8, 0, 0, 0, 0, 11, 0 },
+                { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
+                { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
+                { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
+                { 0, 0, 4, 0, 10, 0, 2, 0, 0 },
+                { 0, 0, 0, 14, 0, 2, 0, 1, 6 },
+                { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
+                { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
+        ArrayList<Integer> path = dj.dijkstra(adjacencyMatrix, 1);
+        System.out.println(path);
+
+        //create a function to check whether the route need to go up or down
+
+
     }
 
     public void goUpstair(View v){
@@ -63,6 +70,12 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void goDownstair(View v){
-
+        PinView imageView = (PinView)findViewById(R.id.imageView);
+        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        PointF start = new PointF(1500, 500);
+        PointF destination = new PointF(500, 2000);
+        PointF[] array = {start, new PointF(1500, 1500), destination};
+        imageView.setPin(start, destination);
+        imageView.setRoute(array);
     }
 }

@@ -3,6 +3,7 @@ package com.example.testlibrary;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
         //define database & reference
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("message");
+        myRef = database.getReference("testLocation");
 
         //put value to database using setValue()
-        myRef.setValue("Hello, World!");
+        myRef.setValue(new Location(new PointF(6.f, 4.0f), "location 1"));
+//        myRef.setValue("Location 1", "test test");
         //if success means database now has json tree database>message>hello,world!
 
         // Read from the database using this listener
@@ -52,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         //        test for qr code scanner
         Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
         startActivity(intent);
+
+//        Intent intent = new Intent(this, AddLocation.class);
+//        startActivity(intent);
     }
 
     public void showQRcode(View v){
