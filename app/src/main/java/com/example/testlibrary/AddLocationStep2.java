@@ -1,30 +1,26 @@
 package com.example.testlibrary;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MainActivity extends AppCompatActivity {
+public class AddLocationStep2 extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -32,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
     StorageReference mStorageRef;
     List<LocationInfo> locationList;
 
+    MultiSelectionSpinner mySpinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_location_step2);
 
+        //setting up the database
         //define database & reference
         database = FirebaseDatabase.getInstance();
 
@@ -44,14 +43,6 @@ public class MainActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
-
-        //if success means database now has json tree database>message>hello,world!
-        LocationInfo info = new LocationInfo();
-        info.setName("example");
-        info.setX(1500);
-        info.setY(1500);
-        myRef.child("example").setValue(info);
-
 
         // Read data from the database using this listener
         myRef.addValueEventListener(new ValueEventListener() {
@@ -73,39 +64,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //set map image
+        PinView imageView = (PinView)findViewById(R.id.imageMap);
+        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
 
-        //haven't implement the storage part
-//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-//        StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
-//
-//        riversRef.putFile(file)
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        // Get a URL to the uploaded content
-//
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        // Handle unsuccessful uploads
-//                        // ...
-//                    }
-//                });
+        //initialize the multiselect spinner
+        ArrayList<Item> items = new ArrayList<>();
+        items.add(Item.builder().name("Item 1").value("item-1").build());
+        items.add(Item.builder().name("Item 2").value("item-2").build());
+        items.add(Item.builder().name("Item 3").value("item-3").build());
+
+        System.out.println(items);
+
+        mySpinner = findViewById(R.id.spn_items);
+        mySpinner.setItems(items);
+        mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                Toast.makeText(getApplicationContext(),
+                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                //TODO clear all the connection
+                Toast.makeText(getApplicationContext(), "Clear", Toast.LENGTH_SHORT);
+            }
+        });
+        //set up multi listener
+        MultiSelectListener listener = new MultiSelectListener(imageView);
+        mySpinner.setMultiSelectListener(listener);
     }
 
-    public void goScanActivity(View view){
-        //        test for qr code scanner
-//        Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
-//        startActivity(intent);
 
-        Intent intent = new Intent(this, AddLocationStep2.class);
-        startActivity(intent);
-    }
 
-    public void showQRcode(View v){
-        //TODO show the sample QR code
-    }
 
 }

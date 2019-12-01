@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="10"
+    tools:context=".AddLocationStep2">
+
+    <com.example.testlibrary.PinView
+        android:id="@+id/imageMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlack"
+        android:layout_weight="2"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select connected location"
+            android:gravity="center"/>
+
+        <com.example.testlibrary.MultiSelectionSpinner
+            android:id="@+id/spn_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="Select Hint"
+            android:spinnerMode="dropdown"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.graphics.PointF;
 public class LocationInfo {
     String name;
     float x,y;
+    String mapName;
 
     public String getName() {
         return name;
@@ -32,5 +33,13 @@ public class LocationInfo {
 
     public PointF getPoint(){
         return new PointF(getX(), getY());
+    }
+
+    public void setMapName(String mapName){
+        this.mapName = mapName;
+    }
+
+    public String getMapName(){
+        return mapName;
     }
 }

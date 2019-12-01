@@ -18,7 +18,6 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="60dp"
-        android:background=""
         android:hint="Username"
         android:textAlignment="center" />
 
@@ -28,7 +27,6 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background=""
         android:hint="Password"
         android:inputType="textPassword"
         android:textAlignment="center" />
@@ -39,7 +37,6 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background=""
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:textAlignment="center" />
@@ -50,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:background=""
         android:text="Register"
         android:textSize="15sp" />
 

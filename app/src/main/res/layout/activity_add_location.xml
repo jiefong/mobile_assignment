@@ -36,7 +36,7 @@
         android:text="Step 2: Pin the map"
         android:gravity="center"/>
 
-    <com.example.testlibrary.PinView
+    <com.example.testlibrary.PinViewAddLocation
         android:id="@+id/imageMap"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +52,7 @@
         android:gravity="center"/>
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextLocationName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -71,7 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Add" />
+            android:text="Add"
+            android:onClick="addLocation"/>
 
         <Button
             android:id="@+id/button4"
