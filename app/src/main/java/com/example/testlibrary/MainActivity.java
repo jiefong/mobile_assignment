@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
 
-        //if success means database now has json tree database>message>hello,world!
-        LocationInfo info = new LocationInfo();
-        info.setName("example");
-        info.setX(1500);
-        info.setY(1500);
-        myRef.child("example").setValue(info);
+//        //if success means database now has json tree database>message>hello,world!
+//        LocationInfo info = new LocationInfo();
+//        info.setName("example");
+//        info.setX(1500);
+//        info.setY(1500);
+//        myRef.child("example").setValue(info);
 
 
         // Read data from the database using this listener
@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
 //        startActivity(intent);
 
-        Intent intent = new Intent(this, AddLocationStep2.class);
+//        Intent intent = new Intent(this, AddLocationStep2.class);
+        Intent intent = new Intent(this, AddLocation.class);
         startActivity(intent);
     }
 

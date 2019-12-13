@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +27,8 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
     private PointF[] route;
     private PointF[][] routes;
 
+    private List<LocationInfo> markers;
+
     //for ontouch
 
     private PointF vStart;
@@ -33,6 +36,12 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
     private int strokeWidth;
 
     private List<PointF> sPoints;
+
+    //used when adding location
+    private PointF currentLocation;
+
+    private PointF curLocInfo;
+    private ArrayList<LocationInfo> selectedConnection;
 
     public PinView(Context context) {
         this(context, null);
@@ -52,6 +61,12 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         invalidate();
     }
 
+    public void setCurrentLocation(PointF current){
+        this.currentLocation = current;
+        initialise();
+        invalidate();
+    }
+
     public void setRoute(PointF[] route){
         this.route = route;
         initialise();
@@ -64,8 +79,15 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         invalidate();
     }
 
-    public PointF getPoint(){
-        return vStart;
+    public void setMarker(List<LocationInfo> locationList){
+        markers = locationList;
+    }
+
+    public void setConnections(PointF current ,ArrayList<LocationInfo> selected){
+        this.curLocInfo = current;
+        this.selectedConnection = selected;
+        initialise();
+        invalidate();
     }
 
     private void initialise() {
@@ -141,17 +163,25 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
 
             String curLocationName = "Current Location";
             sourceToViewCoord(start, vPin);
-            PointF start = getTagPoint(vPin.x , vPin.y);
+//            float vX = ((vPin.x/width)*image_width) - (pin.getWidth()/2);
+//            float vY = ((vPin.y/height)*image_height) - pin.getHeight();
+            float vX = vPin.x;
+            float vY = vPin.y;
+            PointF start = getTagPoint(vX , vY);
             canvas.drawBitmap(pin, start.x, start.y, paint);
-            PointF startLabel = getLabelPoint(vPin.x, vPin.y);
+            PointF startLabel = getLabelPoint(vX, vY);
             canvas.drawText(curLocationName, startLabel.x, startLabel.y, textPaint);
 
-            String desLocationName = "Destination";
-            sourceToViewCoord(destination, vPin);
-            PointF des = getTagPoint(vPin.x, vPin.y);
-            canvas.drawBitmap(pin, des.x, des.y, paint);
-            PointF desLabel = getLabelPoint(vPin.x, vPin.y);
-            canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
+            System.out.println(start.x);
+            System.out.println(start.y);
+
+//            String desLocationName = "Destination";
+//            destination = viewToSourceCoord(destination);
+//            destination = sourceToViewCoord(destination);
+//            PointF des = getTagPoint(vPin.x, vPin.y);
+//            canvas.drawBitmap(pin, des.x, des.y, paint);
+//            PointF desLabel = getLabelPoint(vPin.x, vPin.y);
+//            canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
         }
 
 //          TODO this is used to generate the whole network of the map
@@ -165,6 +195,38 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
 ////            canvas.drawBitmap(pin, vX, vY, paint);
 //            canvas.drawText("Hererere", vX, vY, textPaint);
 //        }
+
+        //Used this function to generate the markers of the map
+        if(markers != null){
+            for (LocationInfo location : markers){
+                String desLocationName = location.getName();
+                PointF point = sourceToViewCoord(location.getPoint(), vPin);
+                System.out.println(point);
+                PointF des = getTagPoint(point.x, point.y);
+                canvas.drawBitmap(pin, des.x, des.y, paint);
+                PointF desLabel = getLabelPoint(vPin.x, vPin.y);
+                canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
+            }
+        }
+        //Used this function to draw the current location
+        if(currentLocation != null & pin != null){
+            String curLocationName = "Current Location";
+            sourceToViewCoord(currentLocation, vPin);
+            float vX = vPin.x;
+            float vY = vPin.y;
+            PointF start = getTagPoint(vX , vY);
+            canvas.drawBitmap(pin, start.x, start.y, paint);
+            PointF startLabel = getLabelPoint(vX, vY);
+            canvas.drawText(curLocationName, startLabel.x, startLabel.y, textPaint);
+        }
+        //Used to generate the connection
+        if(curLocInfo != null & pin != null & selectedConnection != null){
+            sourceToViewCoord(curLocInfo, vPin);
+            for(LocationInfo connect : selectedConnection){
+                PointF temp = sourceToViewCoord(connect.getPoint());
+                canvas.drawLine(vPin.x, vPin.y, temp.x, temp.y, paint);
+            }
+        }
     }
 
     @Override

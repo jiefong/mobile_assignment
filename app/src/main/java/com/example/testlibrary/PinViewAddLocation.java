@@ -20,6 +20,7 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
     private final Paint textPaint = new Paint();
     private final PointF vPin = new PointF();
     private PointF start;
+    private PointF hold;
     private PointF destination;
     private Bitmap pin;
 
@@ -30,6 +31,10 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
     private PointF vStart;
     private boolean drawing = false;
     private int strokeWidth;
+
+    //images height n width
+    private int image_width = 0;
+    private int image_height = 0;
 
     private List<PointF> sPoints;
 
@@ -45,7 +50,13 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
     }
 
     public PointF getPoint(){
-        return vStart;
+        int width = this.getWidth();
+        int height = this.getHeight();
+
+        float vX = ((vStart.x/width)*image_width);
+        float vY = ((vStart.y/height)*image_height);
+        hold = new PointF(vX, vY);
+        return viewToSourceCoord(hold);
     }
 
     private void initialise() {
@@ -80,6 +91,9 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        int width = this.getWidth();
+        int height = this.getHeight();
+
         // Don't draw pin before image is ready so it doesn't move around during setup.
         if (!isReady()) {
             return;
@@ -90,12 +104,33 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
 //          TODO this is used to generate the whole network of the map
         if (vStart != null && pin != null ) {
             // might need to use this to get the real coordinate
-            sourceToViewCoord(vStart);
-            System.out.println(vStart);
-            float vX = vStart.x - (pin.getWidth()/2);
-            float vY = vStart.y - pin.getHeight();
 
+            vStart = sourceToViewCoord(vStart);
+
+            float vX = ((vStart.x/width)*image_width) - (pin.getWidth()/2);
+            float vY = ((vStart.y/height)*image_height) - pin.getHeight();
+            System.out.println(vStart);
             canvas.drawBitmap(pin, vX, vY, paint);
+        }
+
+        //use to draw the destination and starting point
+        if (start != null && pin != null && destination != null) {
+
+            String curLocationName = "Current Location";
+            start = sourceToViewCoord(start);
+            float vX = ((start.x/width)*image_width);
+            float vY = ((start.y/height)*image_height);
+            PointF point =getTagPoint(vX , vY);
+            canvas.drawBitmap(pin, point.x, point.y, paint);
+            PointF startLabel = getLabelPoint(vX, vY);
+            canvas.drawText(curLocationName, startLabel.x, startLabel.y, textPaint);
+
+//            String desLocationName = "Destination";
+//            destination = viewToSourceCoord(destination);
+//            PointF des = getTagPoint(destination.x, destination.y);
+//            canvas.drawBitmap(pin, des.x, des.y, paint);
+//            PointF desLabel = getLabelPoint(vPin.x, vPin.y);
+//            canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
         }
     }
 
@@ -114,6 +149,7 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
             case MotionEvent.ACTION_DOWN:
                 if (event.getActionIndex() == 0) {
                     vStart = new PointF(event.getX(), event.getY());
+                    hold = vStart;
                 }
                 invalidate();
                 break;
@@ -147,4 +183,15 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
         return new PointF(x, y);
     }
 
+    public void setPin(PointF start, PointF destination) {
+        this.start = start;
+        this.destination = destination;
+        initialise();
+        invalidate();
+    }
+
+    public void setImageResolution(int width, int height){
+        image_width = width;
+        image_height = height;
+    }
 }

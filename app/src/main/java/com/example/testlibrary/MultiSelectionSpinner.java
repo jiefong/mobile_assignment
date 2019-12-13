@@ -54,7 +54,7 @@ public class MultiSelectionSpinner extends androidx.appcompat.widget.AppCompatSp
     @Override
     public boolean performClick() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        String[] itemNames = new String[items.size()];
+        final String[] itemNames = new String[items.size()];
 
         for (int i = 0; i < items.size(); i++) {
             itemNames[i] = items.get(i).getName();
@@ -65,7 +65,8 @@ public class MultiSelectionSpinner extends androidx.appcompat.widget.AppCompatSp
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                multiSelectListener.draw();
+                ArrayList<Item> selectedItems = getSelectedItems();
+                multiSelectListener.draw(selectedItems);
             }
         });
 

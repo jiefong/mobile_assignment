@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +33,8 @@ public class AddLocation extends AppCompatActivity {
     StorageReference mStorageRef;
     List<LocationInfo> locationList;
 
+    PinViewAddLocation imageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +49,10 @@ public class AddLocation extends AppCompatActivity {
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
 
-        PinViewAddLocation imageView = (PinViewAddLocation) findViewById(R.id.imageMap);
+        imageView = (PinViewAddLocation) findViewById(R.id.imageMap);
         imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.fsktm_block_b);
+        imageView.setImageResolution(bmp.getWidth(), bmp.getHeight());
 
         Spinner spinnerMap = (Spinner) findViewById(R.id.spinnerMap);
 
@@ -71,6 +77,8 @@ public class AddLocation extends AppCompatActivity {
                 // your code here
             }
         });
+
+
     }
 
     public void handleMapChange(Object sender){
@@ -98,38 +106,23 @@ public class AddLocation extends AppCompatActivity {
         }
 
         //get the pin
-        PinViewAddLocation mapImage = (PinViewAddLocation) findViewById(R.id.imageMap);
-        PointF coor = mapImage.getPoint();
+        final PinViewAddLocation mapImage = (PinViewAddLocation) findViewById(R.id.imageMap);
+        final PointF coor = mapImage.getPoint();
+
         if(coor == null){
             Toast.makeText(this, "Please pin on the map", Toast.LENGTH_SHORT).show();
             check = false;
         }
 
         if(check){
-            System.out.println("---------------------------");
-            System.out.println("adding to database");
-            System.out.println(locationName);
-            System.out.println(coor.x);
-            //if success means database now has json tree database>message>hello,world!
-            final LocationInfo info = new LocationInfo();
-            info.setName(locationName);
-            info.setX(coor.x);
-            info.setY(coor.y);
-            info.setMapName(mapName);
-            myRef.child(locationName).setValue(info, new DatabaseReference.CompletionListener() {
-                public void onComplete(DatabaseError error, DatabaseReference ref) {
+            Toast.makeText(getApplicationContext(), "complete", Toast.LENGTH_SHORT);
+            Intent intent = new Intent(getApplication(), AddLocationStep2.class);
+            intent.putExtra("location", locationName);
+            intent.putExtra("mapName", mapName);
+            intent.putExtra("x", coor.x);
+            intent.putExtra("y", coor.y);
+            startActivity(intent);
 
-                    if (error == null){
-                        Toast.makeText(getApplicationContext(), "complete", Toast.LENGTH_SHORT);
-                        Intent intent = new Intent(getApplication(), AddLocationStep2.class);
-                        intent.putExtra("location", info.getName());
-                        startActivity(intent);
-                    }else{
-                        System.out.println("false--------------------");
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT);
-                    }
-                }
-            });
         }
 
     }

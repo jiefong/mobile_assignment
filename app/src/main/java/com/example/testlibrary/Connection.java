@@ -11,6 +11,9 @@ public class Connection {
         this.location_1 = location_1;
         this.location_2 = location_2;
     }
+    public String getName(){
+        return location_1.getName() + " to " + location_2.getName();
+    }
 
     public float getDistance(){
         PointF point1 = location_1.getPoint();
