@@ -24,6 +24,11 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
     private PointF destination;
     private Bitmap pin;
 
+    //use to draw all the added location
+    private List<LocationInfo> markers;
+
+    private List<Connection> addedConnections;
+
     private PointF[] route;
     private PointF[][] routes;
 
@@ -72,9 +77,9 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
         //set paint
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(strokeWidth * 2);
+//        paint.setStrokeWidth(strokeWidth * 2);
 //        canvas.drawPath(vPath, paint);
-        paint.setStrokeWidth(strokeWidth);
+//        paint.setStrokeWidth(strokeWidth);
         paint.setColor(Color.argb(255, 51, 181, 229));
 
         //for ontouch
@@ -85,6 +90,10 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
         textPaint.setColor(Color.BLACK);
         textPaint.setStrokeWidth(5);
         textPaint.setTextSize(30);
+    }
+
+    public void setAddedConnections(List<Connection> connections){
+        addedConnections = connections;
     }
 
     @Override
@@ -131,6 +140,34 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
 //            canvas.drawBitmap(pin, des.x, des.y, paint);
 //            PointF desLabel = getLabelPoint(vPin.x, vPin.y);
 //            canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
+        }
+
+        //Used this function to generate the markers of the map
+        if(markers != null){
+            for (LocationInfo location : markers){
+                String desLocationName = location.getName();
+                PointF point = sourceToViewCoord(location.getPoint(), vPin);
+                System.out.println(point);
+                PointF des = getTagPoint(point.x, point.y);
+                canvas.drawBitmap(pin, des.x, des.y, paint);
+                PointF desLabel = getLabelPoint(vPin.x, vPin.y);
+                canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
+            }
+        }
+
+        //Used to create all the connections added
+        if(addedConnections != null){
+            for(Connection connection: addedConnections){
+                LocationInfo one = connection.getLocation_1();
+                LocationInfo two = connection.getLocation_2();
+                System.out.println("--------------");
+                System.out.println(one);
+                System.out.println(one);
+                PointF pOne = sourceToViewCoord(one.getPoint());
+                PointF pTwo = sourceToViewCoord(two.getPoint());
+
+                canvas.drawLine(pOne.x, pOne.y, pTwo.x, pTwo.y, paint);
+            }
         }
     }
 
@@ -194,4 +231,9 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
         image_width = width;
         image_height = height;
     }
+
+    public void setMarker(List<LocationInfo> locationList){
+        markers = locationList;
+    }
+
 }

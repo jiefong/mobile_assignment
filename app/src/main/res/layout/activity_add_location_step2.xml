@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="4"
         android:orientation="vertical">
 
         <TextView
@@ -36,26 +36,30 @@
             android:spinnerMode="dropdown"
             />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
 
             <Button
                 android:id="@+id/button5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="goStep1"
-                android:text="Back" />
+                android:text="Back"
+                android:layout_alignParentBottom="true"/>
 
             <Button
                 android:id="@+id/button6"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="addLocationConnection"
-                android:text="Add" />
+                android:text="Add"
+                android:layout_alignParentBottom="true"/>
         </LinearLayout>
 
     </LinearLayout>

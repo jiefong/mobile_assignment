@@ -7,9 +7,7 @@ public class Connection {
     private LocationInfo location_1;
     private LocationInfo location_2;
 
-    public Connection(LocationInfo location_1, LocationInfo location_2){
-        this.location_1 = location_1;
-        this.location_2 = location_2;
+    public Connection(){
     }
     public String getName(){
         return location_1.getName() + " to " + location_2.getName();
@@ -24,12 +22,17 @@ public class Connection {
         float distance = (float)Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
         return distance;
     }
-
-    public LocationInfo getLocation1(){
+    public void setLocation_1(LocationInfo location){
+        this.location_1 = location;
+    }
+    public void setLocation_2(LocationInfo location){
+        this.location_2 = location;
+    }
+    public LocationInfo getLocation_1(){
         return location_1;
     }
 
-    public LocationInfo getLocation2(){
+    public LocationInfo getLocation_2(){
         return location_2;
     }
 

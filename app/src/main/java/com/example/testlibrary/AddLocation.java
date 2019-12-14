@@ -11,14 +11,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -28,10 +31,11 @@ import java.util.List;
 public class AddLocation extends AppCompatActivity {
 
     FirebaseDatabase database;
-    DatabaseReference myRef;
+    DatabaseReference myRef, myConnection;
     FirebaseStorage storage;
     StorageReference mStorageRef;
     List<LocationInfo> locationList;
+    List<Connection> addedConnections;
 
     PinViewAddLocation imageView;
 
@@ -45,14 +49,11 @@ public class AddLocation extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
 
         myRef = database.getReference().child("LocationList");
+        myConnection = database.getReference().child("Connection");
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
-
-        imageView = (PinViewAddLocation) findViewById(R.id.imageMap);
-        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
-        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.fsktm_block_b);
-        imageView.setImageResolution(bmp.getWidth(), bmp.getHeight());
+        addedConnections = new ArrayList<>();
 
         Spinner spinnerMap = (Spinner) findViewById(R.id.spinnerMap);
 
@@ -60,6 +61,55 @@ public class AddLocation extends AppCompatActivity {
         String[] arrayMapName = new String[] {
                 "Main entrance", "DK 1", "DK 2"
         };
+
+        imageView = (PinViewAddLocation) findViewById(R.id.imageMap);
+        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.fsktm_block_b);
+        imageView.setImageResolution(bmp.getWidth(), bmp.getHeight());
+
+        // Read data from the database using this listener
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                locationList.clear();
+
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                    LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+                    locationList.add(u);
+                    //Create item based on the location list
+                }
+                setMarker(locationList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+        myConnection.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                addedConnections.clear();
+
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                    Connection u = userSnapShot.getValue(Connection.class);
+                    addedConnections.add(u);
+                    //Create item based on the location list
+                }
+
+                //set marker of objects on map
+                setConnections(addedConnections);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayMapName);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMap.setAdapter(adapter);
@@ -68,8 +118,6 @@ public class AddLocation extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Context context = view.getContext();
-                Toast.makeText(context, "test", Toast.LENGTH_SHORT);
-
             }
 
             @Override
@@ -77,8 +125,15 @@ public class AddLocation extends AppCompatActivity {
                 // your code here
             }
         });
+    }
 
+    public void setMarker(List<LocationInfo> locationList){
+        imageView.setMarker(locationList);
+    }
 
+    public void setConnections(List<Connection> connections){
+        System.out.println(connections);
+        imageView.setAddedConnections(connections);
     }
 
     public void handleMapChange(Object sender){
@@ -114,6 +169,10 @@ public class AddLocation extends AppCompatActivity {
             check = false;
         }
 
+        //get the checkbox
+        CheckBox checkBoxIsDestination = (CheckBox) findViewById(R.id.checkboxIsDestination);
+        boolean isDestination = checkBoxIsDestination.isChecked();
+
         if(check){
             Toast.makeText(getApplicationContext(), "complete", Toast.LENGTH_SHORT);
             Intent intent = new Intent(getApplication(), AddLocationStep2.class);
@@ -121,6 +180,7 @@ public class AddLocation extends AppCompatActivity {
             intent.putExtra("mapName", mapName);
             intent.putExtra("x", coor.x);
             intent.putExtra("y", coor.y);
+            intent.putExtra("isDestination", isDestination);
             startActivity(intent);
 
         }

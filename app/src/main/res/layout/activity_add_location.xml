@@ -56,14 +56,19 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textCapSentences"
-        android:hint="Location name"
-        android:text="Location name" />
+        android:hint="Location name"/>
+
+    <CheckBox
+        android:id="@+id/checkboxIsDestination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show is on map as destination?" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+        android:orientation="horizontal"
+        >
 
         <Button
             android:id="@+id/button3"

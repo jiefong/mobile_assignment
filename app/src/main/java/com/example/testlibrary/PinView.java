@@ -29,6 +29,8 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
 
     private List<LocationInfo> markers;
 
+    private List<Connection> addedConnections;
+
     //for ontouch
 
     private PointF vStart;
@@ -83,6 +85,12 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         markers = locationList;
     }
 
+    public void setAddedConnections(List<Connection> connections){
+        addedConnections = connections;
+        initialise();
+        invalidate();
+    }
+
     public void setConnections(PointF current ,ArrayList<LocationInfo> selected){
         this.curLocInfo = current;
         this.selectedConnection = selected;
@@ -103,9 +111,9 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         //set paint
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeCap(Paint.Cap.ROUND);
-        paint.setStrokeWidth(strokeWidth * 2);
+//        paint.setStrokeWidth(strokeWidth * 2);
 //        canvas.drawPath(vPath, paint);
-        paint.setStrokeWidth(strokeWidth);
+//        paint.setStrokeWidth(strokeWidth);
         paint.setColor(Color.argb(255, 51, 181, 229));
 
         //for ontouch
@@ -227,6 +235,18 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
                 canvas.drawLine(vPin.x, vPin.y, temp.x, temp.y, paint);
             }
         }
+        //Used to create all the connections added
+        if(addedConnections != null){
+            for(Connection connection: addedConnections){
+                LocationInfo one = connection.getLocation_1();
+                LocationInfo two = connection.getLocation_2();
+
+                PointF pOne = sourceToViewCoord(one.getPoint());
+                PointF pTwo = sourceToViewCoord(two.getPoint());
+
+                canvas.drawLine(pOne.x, pOne.y, pTwo.x, pTwo.y, paint);
+            }
+        }
     }
 
     @Override
@@ -276,4 +296,7 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         y -= pin.getHeight();
         return new PointF(x, y);
     }
+
+
+
 }

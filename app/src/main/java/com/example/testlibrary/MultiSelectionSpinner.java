@@ -141,4 +141,8 @@ public class MultiSelectionSpinner extends androidx.appcompat.widget.AppCompatSp
         multiSelectListener = listener;
     }
 
+    public MultiSelectListener getMultiSelectListener(){
+        return multiSelectListener;
+    }
+
 }

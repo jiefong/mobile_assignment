@@ -6,6 +6,7 @@ public class LocationInfo {
     String name;
     float x,y;
     String mapName;
+    boolean destination;
 
     public String getName() {
         return name;
@@ -41,5 +42,13 @@ public class LocationInfo {
 
     public String getMapName(){
         return mapName;
+    }
+
+    public void setDestination(boolean destination){
+        this.destination = destination;
+    }
+
+    public boolean getDestination (){
+        return destination;
     }
 }
