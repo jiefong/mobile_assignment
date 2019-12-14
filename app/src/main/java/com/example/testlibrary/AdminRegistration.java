@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Registration extends AppCompatActivity {
+public class AdminRegistration extends AppCompatActivity {
 
     private TextView text;
     private EditText etUsername, etPassword, etConfirmPassword;
@@ -89,14 +89,14 @@ public class Registration extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(Registration.this, "Registration successful! Sign in now.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AdminRegistration.this, "AdminRegistration successful! Sign in now.", Toast.LENGTH_LONG).show();
                                     startActivity(myIntent);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Registration.this, "Registration Fail! Sign in now.", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(AdminRegistration.this, "AdminRegistration Fail! Sign in now.", Toast.LENGTH_LONG).show();
                                     startActivity(myIntent);
                                 }
                             });

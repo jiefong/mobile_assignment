@@ -85,7 +85,7 @@ public class AdminLogin extends AppCompatActivity {
 //                new View.OnClickListener() {
 //                    @Override
 //                    public void onClick(View view) {
-//                        Intent myIntent = new Intent(MainActivity.this, Registration.class);
+//                        Intent myIntent = new Intent(MainActivity.this, AdminRegistration.class);
 //                        startActivity(myIntent);
 //                        finish();
 //                    }
