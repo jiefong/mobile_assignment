@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@drawable/homepagebc"
+
     tools:context=".RatingActivity">
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@drawable/button_rounded"
+
         android:text="submit"
         android:layout_marginTop="40dp"/>
 

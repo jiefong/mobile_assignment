@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
 
 //        Intent intent = new Intent(this, AddLocationStep2.class);
-        Intent intent = new Intent(this, AddLocation.class);
+        Intent intent = new Intent(this, AddMap.class);
         startActivity(intent);
     }
 
