@@ -70,9 +70,8 @@ class BarcodeScanCameraActivity : AppCompatActivity(), ZXingScannerView.ResultHa
     override fun handleResult(rawResult: Result?) {
         //get result if the qrcode contain our information then intent to next page
         val intent = Intent(this,SelectDestination::class.java)
+        intent.putExtra("currentLocationKey", rawResult?.text);
         startActivity(intent)
-        text_view_qr_code_value.text = rawResult?.text
-        button_reset.visibility = View.VISIBLE
     }
 
     override fun onClick(view: View?) {

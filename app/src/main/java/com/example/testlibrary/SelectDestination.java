@@ -27,10 +27,24 @@ public class SelectDestination extends AppCompatActivity {
 
     Spinner destination, curLocation;
 
+    String currentLocationKey;
+    String[] arrayCurLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_destination);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                onBackPressed();
+            } else {
+                currentLocationKey = extras.getString("currentLocationKey");
+            }
+        }
+        curLocation = (Spinner) findViewById(R.id.spinnerCurrentLocation);
+        destination = (Spinner) findViewById(R.id.spinnerDestination);
 
         database = FirebaseDatabase.getInstance();
 
@@ -47,13 +61,28 @@ public class SelectDestination extends AppCompatActivity {
 
                 for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+                    String key = userSnapShot.getKey();
 //                    locationList.add(u);
                     if (u.getDestination()) {
                         locationStringList.add(u.getName());
                     }
+                    if(key.equals(currentLocationKey)){
+                        locationStringList.remove(u.getName());
+                        arrayCurLocation = new String[]{
+                                u.getName()
+                        };
+                    }
                     //Create item based on the location list
                 }
                 setDestinationSelection(locationStringList);
+                if(arrayCurLocation == null){
+                    onBackPressed();
+                }else{
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplication(),
+                            android.R.layout.simple_spinner_item, arrayCurLocation);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    curLocation.setAdapter(adapter);
+                }
             }
 
             @Override
@@ -61,19 +90,6 @@ public class SelectDestination extends AppCompatActivity {
                 // Failed to read value
             }
         });
-
-        String[] arrayCurLocation = new String[]{
-                "Main entrance"
-        };
-
-        curLocation = (Spinner) findViewById(R.id.spinnerCurrentLocation);
-        destination = (Spinner) findViewById(R.id.spinnerDestination);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arrayCurLocation);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        curLocation.setAdapter(adapter);
-
-
     }
 
     public void showMap(View v) {

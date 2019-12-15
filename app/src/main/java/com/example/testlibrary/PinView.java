@@ -155,7 +155,11 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
                 PointF start = getTagPoint(vX , vY);
                 canvas.drawBitmap(pin, start.x, start.y, paint);
                 PointF startLabel = getLabelPoint(vX, vY);
-                canvas.drawText(location.getName(), startLabel.x, startLabel.y, textPaint);
+                String locationName = location.getName();
+                if(route.indexOf(location) == 0){
+                    locationName = "Current location";
+                }
+                canvas.drawText(locationName, startLabel.x, startLabel.y, textPaint);
             }
         }
 //        use to stimulate the whole network
@@ -286,7 +290,7 @@ public class PinView extends SubsamplingScaleImageView implements OnTouchListene
         float width = getSWidth()*getScale();
 
         if(x > width/2){
-            x -= pin.getWidth()/2;
+            x -= pin.getWidth();
             y += pin.getHeight()/10;
         }else{
             x += pin.getWidth()/2;
