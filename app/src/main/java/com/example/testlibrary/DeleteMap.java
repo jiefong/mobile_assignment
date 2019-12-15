@@ -72,8 +72,6 @@ public class DeleteMap extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     public void setAdapter(){

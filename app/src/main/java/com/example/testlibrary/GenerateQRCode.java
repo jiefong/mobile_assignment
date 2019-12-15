@@ -68,33 +68,16 @@ public class GenerateQRCode extends AppCompatActivity {
                 keyList.clear();
                 mapList.clear();
                 imageView.setVisibility(View.GONE);
-                for(DataSnapshot userSnapShot : dataSnapshot.getChildren()){
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     MapObject u = userSnapShot.getValue(MapObject.class);
                     mapList.add(u);
                     keyList.add(userSnapShot.getKey());
                 }
                 mapArray = new String[mapList.size()];
-                for(int i = 0 ; i < mapList.size(); i++){
+                for (int i = 0; i < mapList.size(); i++) {
                     mapArray[i] = mapList.get(i).getName();
                 }
-
-                locationReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        locationList.clear();
-                        locationKeyList.clear();
-                        for(DataSnapshot userSnapShot : dataSnapshot.getChildren()){
-                            LocationInfo u = userSnapShot.getValue(LocationInfo.class);
-                            locationList.add(u);
-                            locationKeyList.add(userSnapShot.getKey());
-                        }
-                        setAdapter();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                setAdapter();
             }
 
             @Override
@@ -104,16 +87,16 @@ public class GenerateQRCode extends AppCompatActivity {
 
         btnGenerate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!etEmail.getText().toString().trim().isEmpty() || !etEmail.getText().toString().trim().equals("")) {
-                    title = (String)spinner.getSelectedItem();
+                if (!etEmail.getText().toString().trim().isEmpty() || !etEmail.getText().toString().trim().equals("")) {
+                    title = (String) spinner.getSelectedItem();
                     sendReport();
                 }
             }
         });
     }
 
-    public void setAdapter(){
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,mapArray);
+    public void setAdapter() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mapArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -122,13 +105,13 @@ public class GenerateQRCode extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final Context context = view.getContext();
                 String temp = (String) parent.getItemAtPosition(position);
-                for(int i = 0; i < mapList.size(); i++){
-                    if(mapList.get(i).getName().matches(temp)){
+                for (int i = 0; i < mapList.size(); i++) {
+                    if (mapList.get(i).getName().matches(temp)) {
                         theKey = keyList.get(i);
                         theUri = mapList.get(i).getImgUri();
                     }
                 }
-                if(!theKey.isEmpty() || !theKey.equals("")){
+                if (!theKey.isEmpty() || !theKey.equals("")) {
                     storageReference.child(theKey).child(theUri).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -136,10 +119,28 @@ public class GenerateQRCode extends AppCompatActivity {
                             imageView.setVisibility(View.VISIBLE);
                             Glide.with(context).load(uri.toString()).into(imageView);
                         }
-                    });}
-                else{
+                    });
+                } else {
                     imageView.setVisibility(View.GONE);
                 }
+                locationReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        locationList.clear();
+                        locationKeyList.clear();
+                        for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                            LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+                            if(u.getMapName().equals(theKey)){
+                                locationList.add(u);
+                                locationKeyList.add(userSnapShot.getKey());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
             }
 
             @Override
@@ -156,10 +157,12 @@ public class GenerateQRCode extends AppCompatActivity {
         emailIntent.setData(Uri.parse("mailto:" + etEmail.getText().toString().trim()));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "QR Code for " + title);
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i < locationList.size(); i++ ){
-            if(locationList.get(i).getMapName().equals(theKey)){
+        for (int i = 0; i < locationList.size(); i++) {
+            if (locationList.get(i).getMapName().equals(theKey)) {
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
                         + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
+                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
+                        + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
             }
         }
         sb.append("\n\nSent from Navigator, \nadmin");

@@ -160,9 +160,6 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
             for(Connection connection: addedConnections){
                 LocationInfo one = connection.getLocation_1();
                 LocationInfo two = connection.getLocation_2();
-                System.out.println("--------------");
-                System.out.println(one);
-                System.out.println(one);
                 PointF pOne = sourceToViewCoord(one.getPoint());
                 PointF pTwo = sourceToViewCoord(two.getPoint());
 

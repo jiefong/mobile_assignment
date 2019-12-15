@@ -38,7 +38,7 @@ public class AdminMenu extends AppCompatActivity {
         btnAddLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMenu.this, AddMap.class));
+                startActivity(new Intent(AdminMenu.this, AddLocation.class));
             }
         });
 
