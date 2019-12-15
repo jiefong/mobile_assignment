@@ -32,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@color/colorBlue"
-            android:onClick="btn_gotoRating_page"
+            android:onClick="gotoRating"
             android:text="End" />
     </LinearLayout>
 

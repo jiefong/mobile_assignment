@@ -2,6 +2,7 @@ package com.example.testlibrary;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.view.View;
@@ -179,5 +180,12 @@ public class MapActivity extends AppCompatActivity {
             locationPath.add(locationList.get(num));
         }
         imageView.setRoute(locationPath);
+    }
+
+    public void gotoRating(View view){
+        Intent intent = new Intent(this, RatingActivity.class);
+        intent.putExtra("route", "Navigation : From " + startString + " to " + endString);
+        startActivity(intent);
+        finish();
     }
 }

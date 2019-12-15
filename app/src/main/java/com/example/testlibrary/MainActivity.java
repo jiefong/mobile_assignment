@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseStorage storage;
     StorageReference mStorageRef;
     List<LocationInfo> locationList;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
+
+//        //if success means database now has json tree database>message>hello,world!
+//        LocationInfo info = new LocationInfo();
+//        info.setName("example");
+//        info.setX(1500);
+//        info.setY(1500);
+//        myRef.child("example").setValue(info);
+
 
         // Read data from the database using this listener
         myRef.addValueEventListener(new ValueEventListener() {
@@ -64,10 +74,21 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
+
+        button = findViewById(R.id.button);
+        button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AdminMenu.class);
+                startActivity(intent);
+                finish();
+                return false;
+            }
+        });
     }
 
     public void goScanActivity(View view){
-        //test for qr code scanner
+        //go scan QR code page
         Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
         startActivity(intent);
     }

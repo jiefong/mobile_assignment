@@ -33,15 +33,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
         android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_marginTop="80dp"
+        android:layout_marginRight="40dp"
         android:background="@color/colorBlue"
-        android:textColor="@color/colorWhite"
-        android:textSize="20dp"
+        android:gravity="center"
         android:onClick="goScanActivity"
-        android:text="Scan" />
+        android:text="Scan"
+        android:textColor="@color/colorWhite"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/textView3"
