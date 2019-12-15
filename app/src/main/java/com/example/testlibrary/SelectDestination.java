@@ -8,37 +8,88 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class SelectDestination extends AppCompatActivity {
+
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    List<LocationInfo> locationList;
+    ArrayList<String> locationStringList;
+
+    Spinner destination, curLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_destination);
 
-        String[] arrayCurLocation = new String[] {
-               "Main entrance"
-        };
-        String[] arrayLocationName = new String[] {
-                "Main entrance", "DK 1", "DK 2"
+        database = FirebaseDatabase.getInstance();
+
+        myRef = database.getReference().child("LocationList");
+        locationStringList = new ArrayList<>();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+//                locationList.clear();
+                locationStringList.clear();
+
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                    LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+//                    locationList.add(u);
+                    if (u.getDestination()) {
+                        locationStringList.add(u.getName());
+                    }
+                    //Create item based on the location list
+                }
+                setDestinationSelection(locationStringList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+            }
+        });
+
+        String[] arrayCurLocation = new String[]{
+                "Main entrance"
         };
 
-        Spinner curLocation = (Spinner) findViewById(R.id.spinnerCurrentLocation);
-        Spinner destination = (Spinner) findViewById(R.id.spinnerDestination);
+        curLocation = (Spinner) findViewById(R.id.spinnerCurrentLocation);
+        destination = (Spinner) findViewById(R.id.spinnerDestination);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayCurLocation);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         curLocation.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arrayLocationName);
+
+    }
+
+    public void showMap(View v) {
+        String start = curLocation.getSelectedItem().toString();
+        String end = destination.getSelectedItem().toString();
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("Start", start);
+        intent.putExtra("End", end);
+        startActivity(intent);
+    }
+
+    public void setDestinationSelection(ArrayList<String> locationStringList) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, locationStringList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         destination.setAdapter(adapter);
     }
 
-    public void showMap(View v){
-        //        test for qr code scanner
-        Intent intent = new Intent(this, MapActivity.class);
-        startActivity(intent);
-    }
 }

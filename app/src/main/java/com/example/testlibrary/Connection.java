@@ -7,6 +7,9 @@ public class Connection {
     private LocationInfo location_1;
     private LocationInfo location_2;
 
+    private String locationKey_1;
+    private String locationKey_2;
+
     public Connection(){
     }
     public String getName(){
@@ -36,6 +39,20 @@ public class Connection {
         return location_2;
     }
 
+    public void setLocationKey_1(String locationKey){
+        locationKey_1 = locationKey;
+    }
+
+    public void setLocationKey_2(String locationKey){
+        locationKey_2 = locationKey;
+    }
+
+    public String getLocationKey_1(){
+        return locationKey_1;
+    }
+    public String getLocationKey_2(){
+        return locationKey_2;
+    }
     public boolean checkLocationConnection(LocationInfo location){
         if(location_1 == location || location_2 == location)
             return true;

@@ -27,7 +27,7 @@ public class DijkstraAlgo {
     // using adjacency matrix
     // representation
     public ArrayList dijkstra(float[][] adjacencyMatrix,
-                         int startVertex) {
+                         int startVertex, int endVertex) {
         int nVertices = adjacencyMatrix[0].length;
 
         // shortestDistances[i] will hold the
@@ -105,7 +105,7 @@ public class DijkstraAlgo {
         }
 
 //        printSolution(startVertex, shortestDistances, parents);
-        ArrayList list = printSolution1(startVertex, 5, shortestDistances, parents);
+        ArrayList list = printSolution1(startVertex, endVertex, shortestDistances, parents);
         return list;
     }
 

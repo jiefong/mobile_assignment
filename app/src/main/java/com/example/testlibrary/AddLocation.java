@@ -32,8 +32,6 @@ public class AddLocation extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference myRef, myConnection;
-    FirebaseStorage storage;
-    StorageReference mStorageRef;
     List<LocationInfo> locationList;
     List<Connection> addedConnections;
 
@@ -50,8 +48,6 @@ public class AddLocation extends AppCompatActivity {
 
         myRef = database.getReference().child("LocationList");
         myConnection = database.getReference().child("Connection");
-        storage = FirebaseStorage.getInstance();
-        mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
         addedConnections = new ArrayList<>();
 

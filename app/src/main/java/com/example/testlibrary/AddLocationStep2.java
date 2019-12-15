@@ -15,10 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +25,8 @@ public class AddLocationStep2 extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference myRef;
     DatabaseReference myConnection;
-    FirebaseStorage storage;
-    StorageReference mStorageRef;
     List<LocationInfo> locationList;
+    List<String> locationKeyList;
     List<Connection> addedConnections;
 
     LocationInfo currentLocation;
@@ -51,9 +47,9 @@ public class AddLocationStep2 extends AppCompatActivity {
 
         myRef = database.getReference().child("LocationList");
         myConnection = database.getReference().child("Connection");
-        storage = FirebaseStorage.getInstance();
-        mStorageRef = storage.getReference();
+
         locationList = new ArrayList<>();
+        locationKeyList = new ArrayList<>();
         addedConnections = new ArrayList<>();
 
         //current location is used to save the new location
@@ -112,6 +108,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 locationList.clear();
+                locationKeyList.clear();
 
                 //initialize the multiselect spinner
                 ArrayList<Item> items = new ArrayList<>();
@@ -119,6 +116,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                 for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     LocationInfo u = userSnapShot.getValue(LocationInfo.class);
                     locationList.add(u);
+                    locationKeyList.add(userSnapShot.getKey());
                     //Create item based on the location list
                 }
                 //set spinner items for Location
@@ -165,17 +163,26 @@ public class AddLocationStep2 extends AppCompatActivity {
         final ArrayList<LocationInfo> connectedLocations = listener.getSelected();
         Intent intent = new Intent(getApplication(), MainActivity.class);
         startActivity(intent);
-        myRef.child(currentLocation.getName()).setValue(currentLocation, new DatabaseReference.CompletionListener() {
+        final String key = myRef.push().getKey();
+        myRef.child(key).setValue(currentLocation, new DatabaseReference.CompletionListener() {
             public void onComplete(DatabaseError error, DatabaseReference ref) {
                 if (error == null) {
                     // add connections
                     // for each of the selected connections
                     Connection connection;
-                    if(connectedLocations.size() > 0){
+                    if (connectedLocations.size() > 0) {
                         for (LocationInfo connectedLocation : connectedLocations) {
+                            int index = -1;
+                            for (int i = 0; i < locationList.size(); i++) {
+                                if(locationList.get(i).getName() == connectedLocation.getName()){
+                                    index = i;
+                                }
+                            }
                             connection = new Connection();
                             connection.setLocation_1(currentLocation);
                             connection.setLocation_2(connectedLocation);
+                            connection.setLocationKey_1(key);
+                            connection.setLocationKey_2(locationKeyList.get(index));
                             myConnection.child(connection.getName()).setValue(connection, new DatabaseReference.CompletionListener() {
                                 public void onComplete(DatabaseError error, DatabaseReference ref) {
                                     if (error == null) {
@@ -191,7 +198,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                                 }
                             });
                         }
-                    }else{
+                    } else {
                         //TODO go to admin layout page
                         Intent intent = new Intent(getApplication(), MainActivity.class);
                         startActivity(intent);
@@ -209,15 +216,15 @@ public class AddLocationStep2 extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    public void setMarkers(List<LocationInfo> locations){
+    public void setMarkers(List<LocationInfo> locations) {
         imageView.setMarker(locations);
     }
 
-    public void setConnections(List<Connection> connections){
+    public void setConnections(List<Connection> connections) {
         imageView.setAddedConnections(connections);
     }
 
-    public void setSpinnerListener(List<LocationInfo> locationList, PointF currentLoc){
+    public void setSpinnerListener(List<LocationInfo> locationList, PointF currentLoc) {
         listener = new MultiSelectListener(imageView, locationList, currentLoc);
         mySpinner.setMultiSelectListener(listener);
     }

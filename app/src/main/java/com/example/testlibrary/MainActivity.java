@@ -97,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void goScanActivity(View view){
         //        test for qr code scanner
-//        Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
-//        startActivity(intent);
-
-//        Intent intent = new Intent(this, AddLocationStep2.class);
-        Intent intent = new Intent(this, AddMap.class);
+        Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
         startActivity(intent);
+
+//        Intent intent = new Intent(this, AddLocation.class);
+//        Intent intent = new Intent(this, AddMap.class);
+//        startActivity(intent);
     }
 
     public void showQRcode(View v){
