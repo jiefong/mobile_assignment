@@ -19,7 +19,7 @@ public class MapActivity extends AppCompatActivity {
 
                 //test for map and pin
         PinView imageView = (PinView)findViewById(R.id.imageView);
-        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        imageView.setImage(ImageSource.resource(R.drawable.map1));
         PointF start = new PointF(500, 1500);
         PointF destination = new PointF(2000, 500);
         PointF[] array = {start, new PointF(1500, 1500), destination};
@@ -61,7 +61,7 @@ public class MapActivity extends AppCompatActivity {
 
     public void goUpstair(View v){
         PinView imageView = (PinView)findViewById(R.id.imageView);
-        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        imageView.setImage(ImageSource.resource(R.drawable.map1));
         PointF start = new PointF(1500, 500);
         PointF destination = new PointF(500, 2000);
         PointF[] array = {start, new PointF(1500, 1500), destination};
@@ -71,11 +71,15 @@ public class MapActivity extends AppCompatActivity {
 
     public void goDownstair(View v){
         PinView imageView = (PinView)findViewById(R.id.imageView);
-        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
+        imageView.setImage(ImageSource.resource(R.drawable.map1));
         PointF start = new PointF(1500, 500);
         PointF destination = new PointF(500, 2000);
         PointF[] array = {start, new PointF(1500, 1500), destination};
         imageView.setPin(start, destination);
         imageView.setRoute(array);
+    }
+    
+    public void btn_gotoRating_page(View view) {
+        startActivity(new Intent(getApplicationContext(),RatingActivity.class));
     }
 }
