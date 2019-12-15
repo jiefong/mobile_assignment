@@ -83,6 +83,7 @@ public class SelectDestination extends AppCompatActivity {
         intent.putExtra("Start", start);
         intent.putExtra("End", end);
         startActivity(intent);
+        finish();
     }
 
     public void setDestinationSelection(ArrayList<String> locationStringList) {
