@@ -45,14 +45,6 @@ public class MainActivity extends AppCompatActivity {
         mStorageRef = storage.getReference();
         locationList = new ArrayList<>();
 
-//        //if success means database now has json tree database>message>hello,world!
-//        LocationInfo info = new LocationInfo();
-//        info.setName("example");
-//        info.setX(1500);
-//        info.setY(1500);
-//        myRef.child("example").setValue(info);
-
-
         // Read data from the database using this listener
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,37 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
-
-
-        //haven't implement the storage part
-//        Uri file = Uri.fromFile(new File("path/to/images/rivers.jpg"));
-//        StorageReference riversRef = mStorageRef.child("images/rivers.jpg");
-//
-//        riversRef.putFile(file)
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                        // Get a URL to the uploaded content
-//
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception exception) {
-//                        // Handle unsuccessful uploads
-//                        // ...
-//                    }
-//                });
     }
 
     public void goScanActivity(View view){
-        //        test for qr code scanner
+        //test for qr code scanner
         Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
         startActivity(intent);
-
-//        Intent intent = new Intent(this, AddLocation.class);
-//        Intent intent = new Intent(this, AddMap.class);
-//        startActivity(intent);
     }
 
     public void showQRcode(View v){

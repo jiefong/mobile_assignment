@@ -180,5 +180,4 @@ public class MapActivity extends AppCompatActivity {
         }
         imageView.setRoute(locationPath);
     }
-
 }

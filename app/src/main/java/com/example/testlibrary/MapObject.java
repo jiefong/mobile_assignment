@@ -2,19 +2,21 @@ package com.example.testlibrary;
 
 public class MapObject {
 
-    String name, bitmap;
+    String name, imgUri;
+
+    MapObject(){}
 
     public MapObject(String n, String u){
         this.name = n;
-        this.bitmap = u;
+        this.imgUri = u;
     }
 
-    public String getBitmap() {
-        return bitmap;
+    public String getImgUri() {
+        return imgUri;
     }
 
-    public void setBitmap(String bitmap) {
-        this.bitmap = bitmap;
+    public void setImgUri(String bitmap) {
+        this.imgUri = bitmap;
     }
 
     public String getName() {
