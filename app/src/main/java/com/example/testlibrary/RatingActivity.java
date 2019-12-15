@@ -24,6 +24,5 @@ public class RatingActivity extends AppCompatActivity {
                 Toast.makeText(RatingActivity.this,rating, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }

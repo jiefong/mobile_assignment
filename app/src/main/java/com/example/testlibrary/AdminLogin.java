@@ -81,16 +81,16 @@ public class AdminLogin extends AppCompatActivity {
         });
 
         //admin register need implement?
-//        tvRegister.setOnClickListener(
-//                new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Intent myIntent = new Intent(MainActivity.this, AdminRegistration.class);
-//                        startActivity(myIntent);
-//                        finish();
-//                    }
-//                }
-//        );
+        tvRegister.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent myIntent = new Intent(AdminLogin.this, AdminRegistration.class);
+                        startActivity(myIntent);
+                        finish();
+                    }
+                }
+        );
     }
     private boolean validate(String un, String pw){
         for(int i = 0; i < adminList.size(); i++){
