@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bg_main4"
     android:layout_height="match_parent">
 
     <ScrollView
@@ -23,6 +24,7 @@
                 android:layout_gravity="center"
                 android:drawablePadding="15dp"
                 android:layout_marginBottom="16dp"
+                android:background="@drawable/button_rounded_grey"
                 android:text="Add Map" />
 
             <Button
@@ -33,7 +35,8 @@
                 android:layout_gravity="center"
                 android:drawablePadding="15dp"
                 android:layout_marginBottom="16dp"
-                android:text="Delete Map" />
+                android:text="Delete Map" 
+                android:background="@drawable/button_rounded_grey"/>
 
             <Button
                 android:id="@+id/button_add_location"
@@ -43,7 +46,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Add Location" />
+                android:text="Add Location" 
+                android:background="@drawable/button_rounded_grey"/>
 
             <Button
                 android:id="@+id/button_delete_location"
@@ -53,7 +57,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Delete Location" />
+                android:text="Delete Location" 
+                android:background="@drawable/button_rounded_grey"/>
 
             <Button
                 android:id="@+id/button_generate_qr_code"
@@ -63,7 +68,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Generate QR Code" />
+                android:text="Generate QR Code" 
+                android:background="@drawable/button_rounded_grey"/>
 
             <Button
                 android:id="@+id/button_change_password"
@@ -73,7 +79,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Change Password" />
+                android:text="Change Password" 
+                android:background="@drawable/button_rounded_grey"/>
 
             <Button
                 android:id="@+id/button_logout"
@@ -83,7 +90,8 @@
                 android:layout_marginBottom="50dp"
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
-                android:text="Logout" />
+                android:text="Logout" 
+                android:background="@drawable/button_rounded_grey"/>
 
         </LinearLayout>
 
