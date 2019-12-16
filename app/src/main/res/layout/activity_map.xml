@@ -39,9 +39,12 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorBlue"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/button_rounded"
             android:onClick="gotoRating"
             android:text="end navigation" />
 

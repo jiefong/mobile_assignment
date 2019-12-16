@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 // whenever data at this location is updated.
                 locationList.clear();
 
-                for(DataSnapshot userSnapShot : dataSnapshot.getChildren()){
+                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     LocationInfo u = userSnapShot.getValue(LocationInfo.class);
                     locationList.add(u);
                 }
@@ -79,14 +79,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void goScanActivity(View view){
+    public void goScanActivity(View view) {
         //go scan QR code page
         Intent intent = new Intent(this, BarcodeScanCameraActivity.class);
         startActivity(intent);
     }
 
-    public void showQRcode(View v){
-        //TODO show the sample QR code
+    public void showQRcode(View v) {
+//go scan QR code page
+        Intent intent = new Intent(this, QRCodeSample.class);
+        startActivity(intent);
     }
 
 }

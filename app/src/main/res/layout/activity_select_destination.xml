@@ -9,13 +9,25 @@
     tools:context=".SelectDestination">
 
     <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="16dp"
+        android:text="Step 2: Select Destination" />
+
+    <TextView
         android:id="@+id/textCurrentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="20sp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="16dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="16dp"
