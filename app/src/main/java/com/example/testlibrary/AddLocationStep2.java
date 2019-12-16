@@ -163,6 +163,8 @@ public class AddLocationStep2 extends AppCompatActivity {
 
                 for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+                    System.out.println("-----------");
+                    System.out.println(finalMapName);
                     if (u.getMapName().equals(finalMapName)) {
                         locationList.add(u);
                         locationKeyList.add(userSnapShot.getKey());
@@ -253,7 +255,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                         }
                     } else {
                         //TODO go to admin layout page
-                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                        Intent intent = new Intent(getApplication(), AdminMenu.class);
                         startActivity(intent);
                     }
 

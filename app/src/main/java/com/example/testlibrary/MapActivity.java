@@ -1,29 +1,47 @@
 package com.example.testlibrary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
+    private StorageReference storageReference;
     DatabaseReference myRef;
-    DatabaseReference myConnection;
+    DatabaseReference myConnection, databaseReference;
     List<LocationInfo> locationList;
     List<String> locationKeyList;
+
+    private ArrayList<MapObject> mapList;
+    private ArrayList<String> keyList;
+    private String[] mapArray;
 
     PinView imageView;
 
@@ -65,13 +83,18 @@ public class MapActivity extends AppCompatActivity {
 
         //test for map and pin
         imageView = (PinView) findViewById(R.id.imageView);
-        imageView.setImage(ImageSource.resource(R.drawable.fsktm_block_b));
 
         // Dijsktra algo
         dj = new DijkstraAlgo();
 
         //TODO get all the points available in database
         // Read data from the database using this listener
+        //read all the image object and select the correct one
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
+        storageReference = FirebaseStorage.getInstance().getReference().child("map");
+        keyList = new ArrayList<>();
+        mapList = new ArrayList<>();
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -88,12 +111,34 @@ public class MapActivity extends AppCompatActivity {
                     locationList.add(u);
                     locationKeyList.add(userSnapShot.getKey());
 
-                    System.out.println("------------");
-                    System.out.println(u.getName());
-                    if(u.getName().equals(startString)){
+                    final String mapKey = u.getMapName();
+
+                    if (u.getName().equals(startString)) {
                         startLocation = locationList.indexOf(u);
-                    }
-                    else if(u.getName().equals(endString)){
+
+                        databaseReference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                keyList.clear();
+                                mapList.clear();
+                                imageView.setVisibility(View.GONE);
+                                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                                    MapObject u = userSnapShot.getValue(MapObject.class);
+                                    String key = userSnapShot.getKey();
+                                    if (key.equals(mapKey)) setMap(u, key);
+                                }
+                                mapArray = new String[mapList.size()];
+                                for (int i = 0; i < mapList.size(); i++) {
+                                    mapArray[i] = mapList.get(i).getName();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    } else if (u.getName().equals(endString)) {
                         endLocation = locationList.indexOf(u);
                     }
                     //Create item based on the location list
@@ -146,9 +191,37 @@ public class MapActivity extends AppCompatActivity {
         matrix = new float[size][size];
 
         for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++){
+            for (int j = 0; j < size; j++) {
                 matrix[i][j] = 0;
             }
+        }
+    }
+
+    public void setMap(MapObject u, String mapKey) {
+        final Context context = getApplicationContext();
+        String theKey = mapKey;
+        String theUri = u.getImgUri();
+
+        if (!theKey.isEmpty() || !theKey.equals("")) {
+            storageReference.child(theKey).child(theUri).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    imageView.setVisibility(View.VISIBLE);
+
+                    Glide.with(context)
+                            .asBitmap()
+                            .load(uri.toString())
+                            .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
+                                    imageView.setImage(ImageSource.bitmap(bitmap)); //For SubsampleImage
+                                }
+                            });
+                }
+            });
+        } else {
+            imageView.setVisibility(View.GONE);
         }
     }
 
@@ -164,8 +237,8 @@ public class MapActivity extends AppCompatActivity {
             matrix[index1][index2] = connection.getDistance();
             matrix[index2][index1] = connection.getDistance();
 
-            for (float[] x : matrix){
-                for(float y : x){
+            for (float[] x : matrix) {
+                for (float y : x) {
                     System.out.print(y + " ");
                 }
                 System.out.println();
@@ -176,13 +249,13 @@ public class MapActivity extends AppCompatActivity {
 //        after get the path get the nessary location info
 //        use imageview to draw the map
         List<LocationInfo> locationPath = new ArrayList<>();
-        for (Integer num: path){
+        for (Integer num : path) {
             locationPath.add(locationList.get(num));
         }
         imageView.setRoute(locationPath);
     }
 
-    public void gotoRating(View view){
+    public void gotoRating(View view) {
         Intent intent = new Intent(this, RatingActivity.class);
         intent.putExtra("route", "Navigation : From " + startString + " to " + endString);
         startActivity(intent);

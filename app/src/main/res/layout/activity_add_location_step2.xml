@@ -10,7 +10,7 @@
     <com.example.testlibrary.PinView
         android:id="@+id/imageMap"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:background="@color/colorBlack"
         android:layout_weight="1"/>
 
@@ -44,22 +44,34 @@
             android:layout_alignParentBottom="true">
 
             <Button
-                android:id="@+id/button5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="goStep1"
-                android:text="Back"
-                android:layout_alignParentBottom="true"/>
-
-            <Button
                 android:id="@+id/button6"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
                 android:layout_weight="1"
                 android:onClick="addLocationConnection"
                 android:text="Add"
+                android:background="@drawable/button_blue"
                 android:layout_alignParentBottom="true"/>
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
+                android:layout_weight="1"
+                android:onClick="goStep1"
+                android:text="Back"
+                android:background="@drawable/button_red"
+                android:layout_alignParentBottom="true"/>
+
+
         </LinearLayout>
 
     </LinearLayout>

@@ -150,6 +150,7 @@ public class AddLocation extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Context context = view.getContext();
+
             }
 
             @Override
@@ -160,11 +161,26 @@ public class AddLocation extends AppCompatActivity {
     }
 
     public void setMarker(List<LocationInfo> locationList){
-        imageView.setMarker(locationList);
+        List<LocationInfo> filteredList = new ArrayList<>();
+
+        for (LocationInfo location : locationList){
+            if(location.getMapName().equals(theKey)){
+                filteredList.add(location);
+            }
+        }
+        imageView.setMarker(filteredList);
     }
 
-    public void setConnections(List<Connection> connections){
-        imageView.setAddedConnections(connections);
+    public void setConnections(List<Connection> addedConnections){
+        List<Connection> filteredConnections = new ArrayList<>();
+
+        for (Connection connection : addedConnections){
+            if(connection.getLocation_1().getMapName().equals(theKey)){
+                filteredConnections.add(connection);
+            }
+        }
+
+        imageView.setAddedConnections(filteredConnections);
     }
 
     public void setAdapter(){
@@ -205,6 +221,8 @@ public class AddLocation extends AppCompatActivity {
                 else{
                     imageView.setVisibility(View.GONE);
                 }
+                setMarker(locationList);
+                setConnections(addedConnections);
             }
 
             @Override
@@ -264,5 +282,9 @@ public class AddLocation extends AppCompatActivity {
 
         }
 
+    }
+
+    public void backToAdminMenu(View v){
+        super.onBackPressed();
     }
 }

@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:layout_margin="40dp"
         android:gravity="center"
-        android:text="Follow This App &amp; Not Your Heart"
+        android:text="Navigator"
         android:textColor="#02006C"
         android:textSize="30dp"
         android:textStyle="bold" />

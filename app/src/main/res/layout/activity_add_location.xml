@@ -40,7 +40,7 @@
     <com.example.testlibrary.PinViewAddLocation
         android:id="@+id/imageMap"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:background="@color/colorBlack"
         />
 
@@ -75,16 +75,27 @@
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_weight="1"
             android:text="Add"
+            android:background="@drawable/button_blue"
             android:onClick="addLocation"/>
 
         <Button
             android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:background="@drawable/button_red"
+            android:text="Cancel"
+            android:onClick="backToAdminMenu"/>
     </LinearLayout>
 
 

@@ -158,9 +158,10 @@ public class GenerateQRCode extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "QR Code for " + title);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < locationList.size(); i++) {
+
             if (locationList.get(i).getMapName().equals(theKey)) {
-                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
+//                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
+//                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
                         + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
             }

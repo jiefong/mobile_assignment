@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">Test Library</string>
+    <string name="app_name">Navigator</string>
     <string name="take_picture">Take Picture</string>
-    <string name="goUpstair">Go upstair</string>
-    <string name="goDownStair">Go downstair</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="add_map_step1">Step 1 Select the map image you wish to upload</string>
     <string name="add_map_step2">Step 2 Insert name of your image</string>

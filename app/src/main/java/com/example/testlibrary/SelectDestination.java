@@ -66,6 +66,7 @@ public class SelectDestination extends AppCompatActivity {
                     if (u.getDestination()) {
                         locationStringList.add(u.getName());
                     }
+                    System.out.println("comparing "+key+ " to "+currentLocationKey);
                     if(key.equals(currentLocationKey)){
                         locationStringList.remove(u.getName());
                         arrayCurLocation = new String[]{

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,16 +45,18 @@ public class DeleteLocation extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference myRef, myConnection;
-    List<LocationInfo> locationList;
+    List<LocationInfo> locationList, filteredList;
     List<Connection> addedConnections;
 
     PinView imageView;
 
-    Spinner spinnerMap;
+    Spinner spinnerMap, spinnerDeleteLocation;
     private ArrayList<MapObject> mapList;
     private ArrayList<String> keyList;
     private String theKey, theUri;
     private String[] mapArray;
+
+    private String tempRemove;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +70,20 @@ public class DeleteLocation extends AppCompatActivity {
         myRef = database.getReference().child("LocationList");
         myConnection = database.getReference().child("Connection");
         locationList = new ArrayList<>();
+        filteredList = new ArrayList<>();
         addedConnections = new ArrayList<>();
 
         imageView = (PinView) findViewById(R.id.imageMap);
 
         spinnerMap = (Spinner) findViewById(R.id.spinnerMap);
+        spinnerDeleteLocation = (Spinner) findViewById(R.id.spinnerDeleteLocation);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
         storageReference = FirebaseStorage.getInstance().getReference().child("map");
         keyList = new ArrayList<>();
         mapList = new ArrayList<>();
+
+        Button btnDeleteLocation = (Button)findViewById(R.id.btnDeleteLocation);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -105,13 +112,10 @@ public class DeleteLocation extends AppCompatActivity {
 
                         for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                             LocationInfo u = userSnapShot.getValue(LocationInfo.class);
-                            if(u.getMapName().equals(theKey)){
                                 locationList.add(u);
-
-                            }
                             //Create item based on the location list
                         }
-                        setMarker(locationList);
+                        setMarker();
                     }
 
                     @Override
@@ -133,7 +137,7 @@ public class DeleteLocation extends AppCompatActivity {
                         }
 
                         //set marker of objects on map
-                        setConnections(addedConnections);
+                        setConnections();
                     }
 
                     @Override
@@ -161,14 +165,66 @@ public class DeleteLocation extends AppCompatActivity {
                 // your code here
             }
         });
+
+        spinnerDeleteLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Context context = view.getContext();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+        });
+        btnDeleteLocation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //get spinner item
+                int i = spinnerDeleteLocation.getSelectedItemPosition();
+                int index = locationList.indexOf(filteredList.get(i));
+                String keyDeleteLocation = keyList.get(index);
+                System.out.println(keyDeleteLocation);
+                // Voon voon please continue from here thankssss
+            }
+        });
     }
 
-    public void setMarker(List<LocationInfo> locationList) {
-        imageView.setMarker(locationList);
+    public void setMarker() {
+        filteredList.clear();
+
+        for (LocationInfo location : locationList){
+            if(tempRemove == null){
+                if(location.getMapName().equals(theKey)){
+                    filteredList.add(location);
+                }
+            }else{
+                if(location.getMapName().equals(theKey) && !location.getName().equals(tempRemove)){
+                    filteredList.add(location);
+                }
+            }
+
+        }
+        imageView.setMarker(filteredList);
     }
 
-    public void setConnections(List<Connection> connections) {
-        imageView.setAddedConnections(connections);
+    public void setConnections() {
+        List<Connection> filteredConnections = new ArrayList<>();
+
+        for (Connection connection : addedConnections){
+            if(tempRemove == null) {
+                if (connection.getLocation_1().getMapName().equals(theKey)) {
+                    filteredConnections.add(connection);
+                }
+            }else{
+                if (connection.getLocation_1().getMapName().equals(theKey)
+                        && !(connection.getLocation_1().getName().equals(tempRemove)
+                        || connection.getLocation_2().getName().equals(tempRemove))) {
+                    filteredConnections.add(connection);
+                }
+            }
+        }
+
+        imageView.setAddedConnections(filteredConnections);
     }
 
     public void setAdapter() {
@@ -203,6 +259,10 @@ public class DeleteLocation extends AppCompatActivity {
                                             imageView.setImage(ImageSource.bitmap(bitmap)); //For SubsampleImage
                                         }
                                     });
+
+                            setMarker();
+                            setConnections();
+                            setDeleteLocation();
                         }
                     });
                 } else {
@@ -217,55 +277,33 @@ public class DeleteLocation extends AppCompatActivity {
         });
     }
 
-    public void addLocation(View v) {
-        boolean check = true;
+    public void setDeleteLocation(){
+        final String[] locationArray = new String[filteredList.size()];
 
-        //Get Location name
-        EditText ETLocationName = (EditText) findViewById(R.id.editTextLocationName);
-        String locationName = ETLocationName.getText().toString();
-        if (locationName == null) {
-            Toast.makeText(this, "Please key in the location name", Toast.LENGTH_SHORT).show();
-            check = false;
+        for (int i =0; i< filteredList.size(); i++){
+            locationArray[i] = filteredList.get(i).getName();
         }
 
-        //get the pin
-        final PinViewAddLocation mapImage = (PinViewAddLocation) findViewById(R.id.imageMap);
-        final PointF coor = mapImage.getPoint();
 
-        if (coor == null) {
-            Toast.makeText(this, "Please pin on the map", Toast.LENGTH_SHORT).show();
-            check = false;
-        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDeleteLocation.setAdapter(adapter);
 
-        //get map name or key
-        String mapName = spinnerMap.getSelectedItem().toString();
-        String mapKey = "";
-        if (mapName == null) {
-            Toast.makeText(this, "Please select a map", Toast.LENGTH_SHORT).show();
-            check = false;
-        } else {
-            for (int i = 0; i < mapList.size(); i++) {
-                if (mapList.get(i).getName().equals(mapName)) {
-                    mapKey = keyList.get(i);
-                }
+        spinnerDeleteLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final Context context = view.getContext();
+                String temp = (String) parent.getItemAtPosition(position);
+                //remove the point and related connections
+                tempRemove = temp;
+                setMarker();
+                setConnections();
             }
-        }
 
-        //get the checkbox
-        CheckBox checkBoxIsDestination = (CheckBox) findViewById(R.id.checkboxIsDestination);
-        boolean isDestination = checkBoxIsDestination.isChecked();
-
-        if (check) {
-            Toast.makeText(getApplicationContext(), "complete", Toast.LENGTH_SHORT);
-            Intent intent = new Intent(getApplication(), AddLocationStep2.class);
-            intent.putExtra("location", locationName);
-            intent.putExtra("mapName", mapKey);
-            intent.putExtra("x", coor.x);
-            intent.putExtra("y", coor.y);
-            intent.putExtra("isDestination", isDestination);
-            startActivity(intent);
-
-        }
-
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                imageView.setVisibility(View.GONE);
+            }
+        });
     }
 }
