@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_main4"
     tools:context=".ManageMap">
 
     <TextView
@@ -17,6 +18,7 @@
         android:layout_marginRight="40dp"
         android:gravity="center"
         android:text="Manage Map"
+        android:textStyle="bold"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +33,7 @@
         android:layout_marginEnd="64dp"
         android:gravity="center"
         android:onClick="goAddMap"
+        android:background="@drawable/button_rounded_grey"
         android:text="Add Map"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +49,7 @@
         android:gravity="center"
         android:onClick="goDeleteMap"
         android:text="Delete Map"
+        android:background="@drawable/button_rounded_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnAddMap" />
@@ -60,6 +64,7 @@
         android:gravity="center"
         android:onClick="goBackMain"
         android:text="Back"
+        android:background="@drawable/button_rounded_grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDeleteMap" />
