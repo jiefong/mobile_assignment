@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/homepagebc"
     android:layout_height="match_parent">
 
     <TextView
@@ -8,6 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="ADMIN REGISTER"
+        android:textStyle="bold"
+        android:textColor="@color/colorBlue"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp" />
@@ -48,6 +51,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:text="Register"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/button_rounded"
         android:textSize="15sp" />
 
     <TextView
