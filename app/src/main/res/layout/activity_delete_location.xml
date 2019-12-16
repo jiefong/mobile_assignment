@@ -22,7 +22,6 @@
         android:id="@+id/textSelectMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="Step 1: Select Map"
         android:textAlignment="center"
         android:textSize="18sp"
@@ -31,34 +30,53 @@
         app:layout_constraintTop_toBottomOf="@+id/titleDeleteLocation" />
 
     <Spinner
-        android:id="@+id/spinnerSelectMap"
+        android:id="@+id/spinnerMap"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="64dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSelectMap" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.example.testlibrary.PinView
+            android:id="@+id/imageMap"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="12dp"
+            android:background="@color/colorBlack"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            tools:srcCompat="@tools:sample/avatars[0]" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textSelectLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="Step 1: Select Location"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSelectMap" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <Spinner
         android:id="@+id/spinnerDeleteLocation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="64dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +87,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="128dp"
         android:text="Delete"
         app:layout_constraintEnd_toStartOf="@+id/btnBackToManage3"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +96,6 @@
         android:id="@+id/btnBackToManage3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
         android:layout_marginEnd="64dp"
         android:onClick="goBackManage"
         android:text="Back"

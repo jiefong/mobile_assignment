@@ -46,7 +46,7 @@ public class AdminMenu extends AppCompatActivity {
         btnDeleteLocation.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMenu.this, DeleteMap.class));
+                startActivity(new Intent(AdminMenu.this, DeleteLocation.class));
             }
         });
 
