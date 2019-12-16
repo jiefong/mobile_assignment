@@ -24,7 +24,7 @@
                 android:layout_gravity="center"
                 android:drawablePadding="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/button_rounded_grey"
+                android:background="@drawable/button_blue"
                 android:text="Add Map" />
 
             <Button
@@ -35,8 +35,8 @@
                 android:layout_gravity="center"
                 android:drawablePadding="15dp"
                 android:layout_marginBottom="16dp"
-                android:text="Delete Map" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Delete Map"
+                android:background="@drawable/button_blue"/>
 
             <Button
                 android:id="@+id/button_add_location"
@@ -46,8 +46,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Add Location" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Add Location"
+                android:background="@drawable/button_blue"/>
 
             <Button
                 android:id="@+id/button_delete_location"
@@ -57,8 +57,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Delete Location" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Delete Location"
+                android:background="@drawable/button_blue"/>
 
             <Button
                 android:id="@+id/button_generate_qr_code"
@@ -68,8 +68,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Generate QR Code" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Generate QR Code"
+                android:background="@drawable/button_blue"/>
 
             <Button
                 android:id="@+id/button_change_password"
@@ -79,8 +79,8 @@
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:text="Change Password" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Change Password"
+                android:background="@drawable/button_blue"/>
 
             <Button
                 android:id="@+id/button_logout"
@@ -90,8 +90,8 @@
                 android:layout_marginBottom="50dp"
                 android:drawablePadding="15dp"
                 android:layout_gravity="center"
-                android:text="Logout" 
-                android:background="@drawable/button_rounded_grey"/>
+                android:text="Logout"
+                android:background="@drawable/button_blue"/>
 
         </LinearLayout>
 

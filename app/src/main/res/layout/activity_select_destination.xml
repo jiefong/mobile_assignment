@@ -14,18 +14,18 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="20sp"
         android:layout_marginTop="100dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="16dp"
         android:text="Your Current Location" />
 
     <Spinner
         android:id="@+id/spinnerCurrentLocation"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_gravity="center"
         android:clickable="false"
         />
 
@@ -35,32 +35,33 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="20sp"
         android:layout_marginTop="80dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="16dp"
         android:text="Your Destinated Location" />
 
     <Spinner
         android:id="@+id/spinnerDestination"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_gravity="center"
         />
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textSize="16sp"
         android:layout_marginTop="80dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="5dp"
-        android:background="@drawable/button_rounded_grey"
+        android:background="@drawable/button_blue"
         android:onClick="showMap"
-        android:text="Go"/>
+        android:text="Navigate Me"/>
 
 </LinearLayout>

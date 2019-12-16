@@ -21,13 +21,11 @@
         <activity android:name=".GenerateQRCode"/>
         <activity android:name=".DeleteLocation"/>
         <activity android:name=".AddLocationStep2" />
-        <activity android:name=".ManageMap" />
         <activity android:name=".AddMap" />
         <activity android:name=".DeleteMap" />
         <activity android:name=".AddLocation" />
         <activity android:name=".MapActivity" />
         <activity android:name=".SelectDestination" />
-        <activity android:name=".HoldActivity" />
         <activity android:name=".BarcodeScanCameraActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AdminMenu.class);
+                Intent intent = new Intent(MainActivity.this, AdminLogin.class);
                 startActivity(intent);
                 finish();
                 return false;

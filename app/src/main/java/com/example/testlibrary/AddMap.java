@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class AddMap extends AppCompatActivity {
     private String imgName;
     private Uri imgUri;
     private String bitmap;
+    FrameLayout frameLayout;
     ImageView ivPreview;
     Bitmap selectedImage;
 
@@ -53,6 +55,7 @@ public class AddMap extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
         mAuth = FirebaseAuth.getInstance();
         etImageName = findViewById(R.id.editTextImageName);
+        frameLayout = findViewById(R.id.frameLayout);
     }
 
     public final static int PICK_PHOTO_CODE = 1046;
@@ -80,6 +83,7 @@ public class AddMap extends AppCompatActivity {
             try {
                 selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
                 // Load the selected image into a preview
+                frameLayout.setVisibility(View.VISIBLE);
                 ivPreview = (ImageView) findViewById(R.id.imageViewSelected);
                 ivPreview.setImageBitmap(selectedImage);
             } catch(IOException e) { }

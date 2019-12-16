@@ -70,7 +70,7 @@ public class AdminLogin extends AppCompatActivity {
                     Admin.getInstance().setUsername(thisUsername);
                     Admin.getInstance().setPassword(thisPassword);
                     //need change
-                    Intent myIntent = new Intent(AdminLogin.this, MainActivity.class);
+                    Intent myIntent = new Intent(AdminLogin.this, AdminMenu.class);
                     startActivity(myIntent);
                     finish();
                 }

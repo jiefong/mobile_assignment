@@ -12,8 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp"
         android:text="Delete Location"
         android:textAlignment="center"
+        android:textColor="@color/colorBlue"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,31 +25,34 @@
         android:id="@+id/textSelectMap"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="Step 1: Select Map"
         android:textAlignment="center"
-        android:textStyle="bold"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleDeleteLocation" />
 
     <Spinner
         android:id="@+id/spinnerMap"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSelectMap" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="0dp"
-        android:layout_height="240dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/spinnerMap"
+        app:layout_constraintVertical_bias="0.081">
 
         <com.example.testlibrary.PinView
             android:id="@+id/imageMap"
@@ -67,10 +72,13 @@
         android:id="@+id/textSelectLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Step 1: Select Location"
+        android:layout_marginTop="32dp"
+        android:text="Step 2: Select Location"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
@@ -79,8 +87,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="64dp"
+        android:background="@drawable/edit_text_background"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textSelectLocation" />
 
@@ -89,7 +100,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
         android:text="Delete"
+        android:background="@drawable/button_blue"
         app:layout_constraintEnd_toStartOf="@+id/btnBackToManage3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerDeleteLocation" />
@@ -98,8 +111,10 @@
         android:id="@+id/btnBackToManage3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="64dp"
         android:onClick="goBackManage"
+        android:background="@drawable/button_blue"
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnDeleteLocation"

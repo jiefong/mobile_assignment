@@ -12,47 +12,51 @@
         android:id="@+id/button_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="71dp"
         android:text="Reset"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/button_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_view_qr_code_value"
-        app:layout_constraintVertical_bias="0.195" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:id="@+id/frame_layout_camera"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        android:layout_margin="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/text_view_qr_code_value"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
     <TextView
         android:id="@+id/text_view_qr_code_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:text="QR Code Value"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame_layout_camera"
-        app:layout_constraintVertical_bias="0.272" />
+        app:layout_constraintTop_toBottomOf="@+id/frame_layout_camera" />
 
     <Button
         android:id="@+id/buttonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_blue"
+        android:layout_marginTop="36dp"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_qr_code_value" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_qr_code_value"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

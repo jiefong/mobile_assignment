@@ -12,7 +12,6 @@
         android:textStyle="bold"
         android:textColor="@color/colorBlue"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp" />
 
     <EditText
