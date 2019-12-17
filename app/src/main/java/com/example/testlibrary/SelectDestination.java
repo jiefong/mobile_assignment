@@ -30,6 +30,8 @@ public class SelectDestination extends AppCompatActivity {
     String currentLocationKey;
     String[] arrayCurLocation;
 
+    String currentMapKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,7 @@ public class SelectDestination extends AppCompatActivity {
 
         myRef = database.getReference().child("LocationList");
         locationStringList = new ArrayList<>();
+        locationList = new ArrayList<>();
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -65,9 +68,10 @@ public class SelectDestination extends AppCompatActivity {
 //                    locationList.add(u);
                     if (u.getDestination()) {
                         locationStringList.add(u.getName());
+                        locationList.add(u);
                     }
-                    System.out.println("comparing "+key+ " to "+currentLocationKey);
                     if(key.equals(currentLocationKey)){
+                        currentMapKey =u.getMapName();
                         locationStringList.remove(u.getName());
                         arrayCurLocation = new String[]{
                                 u.getName()
@@ -75,6 +79,12 @@ public class SelectDestination extends AppCompatActivity {
                     }
                     //Create item based on the location list
                 }
+                for (LocationInfo location : locationList){
+                    if(!location.getMapName().equals(currentMapKey)){
+                        locationList.remove(location);
+                    }
+                }
+
                 setDestinationSelection(locationStringList);
                 if(arrayCurLocation == null){
                     onBackPressed();

@@ -134,12 +134,6 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
             PointF startLabel = getLabelPoint(vX, vY);
             canvas.drawText(curLocationName, startLabel.x, startLabel.y, textPaint);
 
-//            String desLocationName = "Destination";
-//            destination = viewToSourceCoord(destination);
-//            PointF des = getTagPoint(destination.x, destination.y);
-//            canvas.drawBitmap(pin, des.x, des.y, paint);
-//            PointF desLabel = getLabelPoint(vPin.x, vPin.y);
-//            canvas.drawText(desLocationName, desLabel.x, desLabel.y, textPaint);
         }
 
         //Used this function to generate the markers of the map

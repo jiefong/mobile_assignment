@@ -163,8 +163,6 @@ public class AddLocationStep2 extends AppCompatActivity {
 
                 for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                     LocationInfo u = userSnapShot.getValue(LocationInfo.class);
-                    System.out.println("-----------");
-                    System.out.println(finalMapName);
                     if (u.getMapName().equals(finalMapName)) {
                         locationList.add(u);
                         locationKeyList.add(userSnapShot.getKey());

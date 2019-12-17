@@ -66,17 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
-
-        button = findViewById(R.id.button);
-        button.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AdminLogin.class);
-                startActivity(intent);
-                finish();
-                return false;
-            }
-        });
     }
 
     public void goScanActivity(View view) {
@@ -90,5 +79,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, QRCodeSample.class);
         startActivity(intent);
     }
-
+    public void goAdminLogin(View v) {
+//go scan QR code page
+        Intent intent = new Intent(MainActivity.this, AdminLogin.class);
+        startActivity(intent);
+    }
 }
