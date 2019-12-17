@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class GenerateQRCode extends AppCompatActivity {
@@ -89,7 +91,11 @@ public class GenerateQRCode extends AppCompatActivity {
             public void onClick(View v) {
                 if (!etEmail.getText().toString().trim().isEmpty() || !etEmail.getText().toString().trim().equals("")) {
                     title = (String) spinner.getSelectedItem();
-                    sendReport();
+                    try {
+                        sendReport();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -130,7 +136,7 @@ public class GenerateQRCode extends AppCompatActivity {
                         locationKeyList.clear();
                         for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                             LocationInfo u = userSnapShot.getValue(LocationInfo.class);
-                            if(u.getMapName().equals(theKey)){
+                            if(u.getMapName().equals(theKey) && u.getDestination()){
                                 locationList.add(u);
                                 locationKeyList.add(userSnapShot.getKey());
                             }
@@ -150,7 +156,7 @@ public class GenerateQRCode extends AppCompatActivity {
         });
     }
 
-    private void sendReport() {
+    private void sendReport() throws UnsupportedEncodingException {
         //File local = new File(file.getAbsolutePath());
 
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
@@ -162,8 +168,9 @@ public class GenerateQRCode extends AppCompatActivity {
             if (locationList.get(i).getMapName().equals(theKey)) {
 //                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
 //                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
+                String locationNameEncoded = URLEncoder.encode(locationList.get(i).getName(), "utf-8");
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-                        + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
+                        + "https://127.0.0.1/qrcode/" + locationNameEncoded + "/" + locationKeyList.get(i) + "\n\n");
             }
         }
         sb.append("\n\nSent from Navigator, \nadmin");
