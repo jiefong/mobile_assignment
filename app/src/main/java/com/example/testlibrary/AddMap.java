@@ -1,9 +1,11 @@
 package com.example.testlibrary;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -91,6 +93,29 @@ public class AddMap extends AppCompatActivity {
     }
 
     public void uploadImage(View v){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to add this map?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        confirmUploadImage();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void confirmUploadImage(){
         bitmap = imgUri.getLastPathSegment();
         MapObject m = new MapObject(etImageName.getText().toString().trim(),bitmap);
         String key = databaseReference.push().getKey();
@@ -98,13 +123,13 @@ public class AddMap extends AppCompatActivity {
         storageReference.child(key).child(imgUri.getLastPathSegment()).putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AddMap.this, "success!",Toast.LENGTH_LONG).show();
+                Toast.makeText(AddMap.this, "Map is successfully added!",Toast.LENGTH_LONG).show();
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddMap.this, "fail!",Toast.LENGTH_LONG).show();
+                Toast.makeText(AddMap.this, "Map is fail to be added!",Toast.LENGTH_LONG).show();
                 finish();
             }
         });
