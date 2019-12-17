@@ -17,7 +17,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="24dp"
                 android:textAlignment="center"
                 android:text="Generate QR Code"
                 android:textSize="30sp"
@@ -29,7 +29,7 @@
                 android:gravity="start"
                 android:textSize="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="16dp"
                 android:text="Recipient Email:"/>
 
             <EditText
@@ -58,20 +58,19 @@
                 android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
                 android:layout_gravity="center"/>
 
             <FrameLayout
                 android:id="@+id/frameLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
                 android:layout_gravity="center">
 
                 <ImageView
                     android:id="@+id/imageViewSelected"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
                     android:layout_gravity="center"
                     android:scaleType="fitCenter"
                     android:visibility="gone" />

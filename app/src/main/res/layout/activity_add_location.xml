@@ -7,11 +7,23 @@
     android:orientation="vertical"
     tools:context=".AddLocation">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <TextView
         android:id="@+id/textAddLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Add Location"
+        android:layout_margin="16dp"
+        android:textSize="30sp"
+        android:textColor="@color/colorBlue"
         android:textStyle="bold"
         android:gravity="center"/>
 
@@ -20,14 +32,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Step 1: Select the map"
+        android:textSize="16dp"
         android:gravity="center"/>
 
     <Spinner
         android:id="@+id/spinnerMap"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
         />
 
     <TextView
@@ -35,34 +48,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Step 2: Pin the map"
+        android:textSize="16dp"
+        android:layout_margin="8dp"
         android:gravity="center"/>
 
+            <FrameLayout
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:layout_margin="8dp">
     <com.example.testlibrary.PinViewAddLocation
         android:id="@+id/imageMap"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="match_parent"
         android:background="@color/colorBlack"
         />
+            </FrameLayout>
 
     <TextView
         android:id="@+id/textStep3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Step 3: Add the location name"
+        android:textSize="16sp"
+        android:layout_margin="8dp"
         android:gravity="center"/>
 
     <EditText
         android:id="@+id/editTextLocationName"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/edit_text_background"
+        android:padding="8dp"
+        android:layout_margin="8dp"
         android:ems="10"
         android:inputType="textCapSentences"
         android:hint="Location name"/>
 
     <CheckBox
         android:id="@+id/checkboxIsDestination"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
         android:text="Show is on map as destination?" />
 
     <LinearLayout
@@ -97,6 +125,9 @@
             android:text="Cancel"
             android:onClick="backToAdminMenu"/>
     </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

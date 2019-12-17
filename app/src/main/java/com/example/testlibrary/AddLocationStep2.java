@@ -105,9 +105,9 @@ public class AddLocationStep2 extends AppCompatActivity {
         mySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                Toast.makeText(getApplicationContext(),
-                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),
+//                        "OnItemSelectedListener : " + parent.getItemAtPosition(pos).toString(),
+//                        Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -257,6 +257,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                         //TODO go to admin layout page
                         Intent intent = new Intent(getApplication(), AdminMenu.class);
                         startActivity(intent);
+                        Toast.makeText(getApplicationContext(), "Location is added !", Toast.LENGTH_SHORT);
                     }
 
                 } else {

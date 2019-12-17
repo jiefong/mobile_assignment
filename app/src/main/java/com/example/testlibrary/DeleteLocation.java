@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,10 +53,10 @@ public class DeleteLocation extends AppCompatActivity {
 
     Spinner spinnerMap, spinnerDeleteLocation;
     private ArrayList<MapObject> mapList;
-    private ArrayList<String> keyList;
+    private ArrayList<String> keyList, locationKeyList;
     private String theKey, theUri;
     private String[] mapArray;
-
+    private LocationInfo  theItem = new LocationInfo();
     private String tempRemove;
 
     @Override
@@ -70,6 +71,7 @@ public class DeleteLocation extends AppCompatActivity {
         myRef = database.getReference().child("LocationList");
         myConnection = database.getReference().child("Connection");
         locationList = new ArrayList<>();
+        locationKeyList = new ArrayList<>();
         filteredList = new ArrayList<>();
         addedConnections = new ArrayList<>();
 
@@ -80,6 +82,7 @@ public class DeleteLocation extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
         storageReference = FirebaseStorage.getInstance().getReference().child("map");
+
         keyList = new ArrayList<>();
         mapList = new ArrayList<>();
 
@@ -109,10 +112,11 @@ public class DeleteLocation extends AppCompatActivity {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         locationList.clear();
-
+                        locationKeyList.clear();
                         for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                             LocationInfo u = userSnapShot.getValue(LocationInfo.class);
                                 locationList.add(u);
+                                locationKeyList.add(userSnapShot.getKey());
                             //Create item based on the location list
                         }
                         setMarker();
@@ -180,11 +184,21 @@ public class DeleteLocation extends AppCompatActivity {
         btnDeleteLocation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //get spinner item
-                int i = spinnerDeleteLocation.getSelectedItemPosition();
-                int index = locationList.indexOf(filteredList.get(i));
-                String keyDeleteLocation = keyList.get(index);
-                System.out.println(keyDeleteLocation);
+//                System.out.println(locationList);
+//                System.out.println(locationKeyList);
+//                Log.e("TAG", "gg: " + locationList);
+//                Log.e("TAG", "gg: " + locationKeyList);
+                int index = locationList.indexOf(theItem);
+                String keyDeleteLocation = locationKeyList.get(index);
                 // Voon voon please continue from here thankssss
+                //welcome
+                for(Connection c : addedConnections){
+                    if(c.getLocationKey_1().equals(keyDeleteLocation) || c.getLocationKey_2().equals(keyDeleteLocation)){
+                        myConnection.child(c.getName()).removeValue();
+                    }
+                }
+                myRef.child(keyDeleteLocation).removeValue();
+                Toast.makeText(getApplicationContext(),"Location is deleted !",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -294,6 +308,12 @@ public class DeleteLocation extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 final Context context = view.getContext();
                 String temp = (String) parent.getItemAtPosition(position);
+                for(LocationInfo i : filteredList){
+                    if(i.getName().equals(temp)){
+                        theItem = i;
+                    }
+                }
+                //theItem = filteredList.get(position);
                 //remove the point and related connections
                 tempRemove = temp;
                 setMarker();
