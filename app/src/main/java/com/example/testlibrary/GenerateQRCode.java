@@ -91,6 +91,9 @@ public class GenerateQRCode extends AppCompatActivity {
                     title = (String) spinner.getSelectedItem();
                     sendReport();
                 }
+                else{
+                    Toast.makeText(GenerateQRCode.this, "Enter a valid email !", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -160,9 +163,10 @@ public class GenerateQRCode extends AppCompatActivity {
         for (int i = 0; i < locationList.size(); i++) {
 
             if (locationList.get(i).getMapName().equals(theKey)) {
-//                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-//                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
+                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n");
+//                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
+                sb.append(" or "
                         + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
             }
         }
