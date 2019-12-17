@@ -1,6 +1,8 @@
 package com.example.testlibrary;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
@@ -26,12 +30,14 @@ import java.util.ArrayList;
 
 public class DeleteMap extends AppCompatActivity {
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference, locationRef, connectionRef;
     private StorageReference storageReference;
     private ImageView imageView;
     private Spinner spinner;
+    private ArrayList<LocationInfo> locationList;
+    private ArrayList<Connection> connectionList;
     private ArrayList<MapObject> mapList;
-    private ArrayList<String> keyList;
+    private ArrayList<String> keyList, locationKeyList;
     private String theKey, theUri;
     private String[] mapArray;
 
@@ -44,8 +50,13 @@ public class DeleteMap extends AppCompatActivity {
         imageView = findViewById(R.id.imageViewSelected);
         spinner = findViewById(R.id.spinner);
 
+        locationRef = FirebaseDatabase.getInstance().getReference().child("LocationList");
+        connectionRef = FirebaseDatabase.getInstance().getReference().child("Connection");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
         storageReference = FirebaseStorage.getInstance().getReference().child("map");
+        locationList = new ArrayList<>();
+        connectionList = new ArrayList<>();
+        locationKeyList = new ArrayList<>();
         keyList = new ArrayList<>();
         mapList = new ArrayList<>();
 
@@ -64,7 +75,49 @@ public class DeleteMap extends AppCompatActivity {
                 for(int i = 0 ; i < mapList.size(); i++){
                     mapArray[i] = mapList.get(i).getName();
                 }
-                setAdapter();
+
+                locationRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        locationList.clear();
+                        locationKeyList.clear();
+                        for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                            LocationInfo u = userSnapShot.getValue(LocationInfo.class);
+                            locationList.add(u);
+                            locationKeyList.add(userSnapShot.getKey());
+                            //Create item based on the location list
+                        }
+
+                        connectionRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // This method is called once with the initial value and again
+                                // whenever data at this location is updated.
+                                connectionList.clear();
+                                for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
+                                    Connection u = userSnapShot.getValue(Connection.class);
+                                    connectionList.add(u);
+                                    //Create item based on the location list
+                                }
+                                setAdapter();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError error) {
+                                // Failed to read value
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                    }
+                });
+
             }
 
             @Override
@@ -118,7 +171,41 @@ public class DeleteMap extends AppCompatActivity {
     }
 
     public void deleteMap(View view){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to delete this map?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        confirmDeleteMap();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void confirmDeleteMap(){
         storageReference.child(theKey).delete();
+        Toast.makeText(getApplicationContext(),"Map is deleted!", Toast.LENGTH_SHORT);
         databaseReference.child(theKey).removeValue();
+        for(int i = 0; i < locationList.size(); i++){
+            if(locationList.get(i).getMapName().equals(theKey)){
+                locationRef.child(locationKeyList.get(i)).removeValue();
+                for(Connection c : connectionList){
+                    if(c.getLocationKey_1().equals(locationKeyList.get(i)) || c.getLocationKey_2().equals(locationKeyList.get(i))){
+                        connectionRef.child(c.getName()).removeValue();
+                    }
+                }
+            }
+        }
     }
 }

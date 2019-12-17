@@ -169,19 +169,16 @@ public class GenerateQRCode extends AppCompatActivity {
         for (int i = 0; i < locationList.size(); i++) {
 
             if (locationList.get(i).getMapName().equals(theKey)) {
-<<<<<<< HEAD
 //                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
 //                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
                 String locationNameEncoded = URLEncoder.encode(locationList.get(i).getName(), "utf-8");
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
                         + "https://127.0.0.1/qrcode/" + locationNameEncoded + "/" + locationKeyList.get(i) + "\n\n");
-=======
-                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n");
 //                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-                sb.append(" or "
-                        + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
->>>>>>> 4d7d907a722e21cf9b9da23dec9f8489b1393e05
+//                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n");
+//                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
+//                sb.append(" or "
+//                        + "https://127.0.0.1/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "\n\n");
             }
         }
         sb.append("\n\nSent from Navigator, \nadmin");
