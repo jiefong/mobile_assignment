@@ -41,8 +41,8 @@ public class AdminLandingPage extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send)
+                R.id.nav_dashboard, R.id.nav_add_map, R.id.nav_delete_map,
+                R.id.nav_add_location, R.id.nav_delete_location, R.id.nav_generate_qr, R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -53,18 +53,31 @@ public class AdminLandingPage extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 //Label is the name of the fragment
+                CharSequence destinationLabel = destination.getLabel();
+                Intent intent = new Intent(getApplication(), AdminLandingPage.class);
+                if (destination.getLabel().equals("Dashboard")) {
 
-                //use the label to intent??
-                Intent intent = new Intent(getApplication(), AddLocation.class);
-                startActivity(intent);
+                } else {
+                    if (destinationLabel.equals("Add Map"))
+                        intent = new Intent(getApplication(), AddMap.class);
+                    else if (destinationLabel.equals("Delete Map"))
+                        intent = new Intent(getApplication(), DeleteMap.class);
+                    else if (destinationLabel.equals("Add Location"))
+                        intent = new Intent(getApplication(), AddLocation.class);
+                    else if (destinationLabel.equals("Delete Location"))
+                        intent = new Intent(getApplication(), DeleteLocation.class);
+                    else if (destinationLabel.equals("Generate QR Code"))
+                        intent = new Intent(getApplication(), GenerateQRCode.class);
+                    //use the label to intent??
+                    startActivity(intent);
+                }
             }
         };
+        navController.addOnDestinationChangedListener(changedListener);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.admin_landing_page, menu);
         return true;
     }
 

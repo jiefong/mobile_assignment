@@ -3,43 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_dashboard">
 
     <!--Map management-->
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_dashboard"
         android:name="com.example.testlibrary.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_add_map"
         android:name="com.example.testlibrary.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
+        android:label="@string/menu_add_map"
         tools:layout="@layout/fragment_gallery" />
 
     <!--Location management-->
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_delete_map"
         android:name="com.example.testlibrary.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
+        android:label="@string/menu_delete_map"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_tools"
+        android:id="@+id/nav_add_location"
         android:name="com.example.testlibrary.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
+        android:label="@string/menu_add_location"
         tools:layout="@layout/fragment_tools" />
 
     <fragment
-        android:id="@+id/nav_share"
+        android:id="@+id/nav_delete_location"
         android:name="com.example.testlibrary.ui.share.ShareFragment"
-        android:label="@string/menu_share"
+        android:label="@string/menu_delete_location"
         tools:layout="@layout/fragment_share" />
 
     <fragment
-        android:id="@+id/nav_send"
+        android:id="@+id/nav_generate_qr"
         android:name="com.example.testlibrary.ui.send.SendFragment"
-        android:label="@string/menu_send"
+        android:label="@string/menu_generate_qr"
+        tools:layout="@layout/fragment_send" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.testlibrary.ui.send.SendFragment"
+        android:label="@string/menu_logout"
         tools:layout="@layout/fragment_send" />
 </navigation>
