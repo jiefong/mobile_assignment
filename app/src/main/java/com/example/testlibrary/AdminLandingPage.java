@@ -49,32 +49,34 @@ public class AdminLandingPage extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        NavController.OnDestinationChangedListener changedListener = new NavController.OnDestinationChangedListener() {
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 //Label is the name of the fragment
                 CharSequence destinationLabel = destination.getLabel();
-                Intent intent = new Intent(getApplication(), AdminLandingPage.class);
-                if (destination.getLabel().equals("Dashboard")) {
-
-                } else {
-                    if (destinationLabel.equals("Add Map"))
-                        intent = new Intent(getApplication(), AddMap.class);
+                Intent intent = new Intent(getApplicationContext(), AdminLandingPage.class);
+                if(destinationLabel.equals(""))
+                    intent = new Intent(getApplicationContext(), AdminLandingPage.class);
+                else if (destinationLabel.equals("AdminDashboard"))
+                    intent = new Intent(getApplicationContext(), AdminDashboard.class);
+                    else if (destinationLabel.equals("Add Map"))
+                        intent = new Intent(getApplicationContext(), AddMap.class);
                     else if (destinationLabel.equals("Delete Map"))
-                        intent = new Intent(getApplication(), DeleteMap.class);
+                        intent = new Intent(getApplicationContext(), DeleteMap.class);
                     else if (destinationLabel.equals("Add Location"))
-                        intent = new Intent(getApplication(), AddLocation.class);
+                        intent = new Intent(getApplicationContext(), AddLocation.class);
                     else if (destinationLabel.equals("Delete Location"))
-                        intent = new Intent(getApplication(), DeleteLocation.class);
+                        intent = new Intent(getApplicationContext(), DeleteLocation.class);
                     else if (destinationLabel.equals("Generate QR Code"))
-                        intent = new Intent(getApplication(), GenerateQRCode.class);
+                        intent = new Intent(getApplicationContext(), GenerateQRCode.class);
                     //use the label to intent??
-                    startActivity(intent);
-                }
+
+                startActivity(intent);
             }
-        };
-        navController.addOnDestinationChangedListener(changedListener);
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

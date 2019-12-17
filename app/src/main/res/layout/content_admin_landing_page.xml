@@ -19,12 +19,9 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".AddLocation">
+        tools:context=".AdminDashboard">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -35,121 +32,310 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+
                 <TextView
-                    android:id="@+id/textAddLocation"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Location"
-                    android:layout_margin="16dp"
-                    android:textSize="30sp"
+                    android:text="Dashboard"
                     android:textColor="@color/colorBlue"
+                    android:textAlignment="center"
+                    android:layout_marginTop="24dp"
+                    android:textSize="35sp"
                     android:textStyle="bold"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:id="@+id/textStep1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Step 1: Select the map"
-                    android:textSize="16dp"
-                    android:gravity="center"/>
-
-                <Spinner
-                    android:id="@+id/spinnerMap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    />
-
-                <TextView
-                    android:id="@+id/textStep2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Step 2: Pin the map"
-                    android:textSize="16dp"
-                    android:layout_margin="8dp"
-                    android:gravity="center"/>
-
-                <FrameLayout
-                    android:layout_width="400dp"
-                    android:layout_height="400dp"
-                    android:layout_margin="8dp">
-                    <com.example.testlibrary.PinViewAddLocation
-                        android:id="@+id/imageMap"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorBlack"
-                        />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/textStep3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Step 3: Add the location name"
-                    android:textSize="16sp"
-                    android:layout_margin="8dp"
-                    android:gravity="center"/>
-
-                <EditText
-                    android:id="@+id/editTextLocationName"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/edit_text_background"
-                    android:padding="8dp"
-                    android:layout_margin="8dp"
-                    android:ems="10"
-                    android:inputType="textCapSentences"
-                    android:hint="Location name"/>
-
-                <CheckBox
-                    android:id="@+id/checkboxIsDestination"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:text="Show is on map as destination?" />
+                    android:layout_gravity="center"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:layout_marginTop="24dp"
+                    android:gravity="center">
 
-                    <Button
-                        android:id="@+id/button3"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_weight="1"
-                        android:text="Add"
-                        android:background="@drawable/button_blue"
-                        android:onClick="addLocation"/>
+                        android:orientation="vertical"
+                        android:layout_marginRight="16dp">
 
-                    <Button
-                        android:id="@+id/button4"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Number of Maps"
+                            android:textSize="20dp"/>
+                        <TextView
+                            android:id="@+id/map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="35dp"
+                            android:layout_gravity="center"
+                            android:text="N"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_red"
-                        android:text="Cancel"
-                        android:onClick="backToAdminMenu"/>
+                        android:orientation="vertical"
+                        android:layout_marginLeft="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Average Rating"
+                            android:textSize="20dp"/>
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="35dp"
+                            android:layout_gravity="center"
+                            android:text="N"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginRight="32dp"
+                    android:background="@android:color/darker_gray" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="20dp"
+                    android:text="Map details"
+                    android:layout_marginTop="16dp"/>
+
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"/>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="12dp"
+                        android:scaleType="fitCenter"
+                        android:visibility="gone"/>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginRight="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Number of Location"
+                            android:textSize="16dp"/>
+                        <TextView
+                            android:id="@+id/location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="35dp"
+                            android:layout_gravity="center"
+                            android:text="N"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:background="@android:color/darker_gray" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Total Connection"
+                            android:textSize="16dp"/>
+                        <TextView
+                            android:id="@+id/connection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="35dp"
+                            android:layout_gravity="center"
+                            android:text="N"/>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
 
+        </ScrollView>
 
     </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--xmlns:tools="http://schemas.android.com/tools"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:orientation="vertical"-->
+<!--tools:context=".AddLocation">-->
+
+<!--<ScrollView-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content">-->
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textAddLocation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Add Location"-->
+<!--            android:layout_margin="16dp"-->
+<!--            android:textSize="30sp"-->
+<!--            android:textColor="@color/colorBlue"-->
+<!--            android:textStyle="bold"-->
+<!--            android:gravity="center"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textStep1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Step 1: Select the map"-->
+<!--            android:textSize="16dp"-->
+<!--            android:gravity="center"/>-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spinnerMap"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="8dp"-->
+<!--            />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textStep2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Step 2: Pin the map"-->
+<!--            android:textSize="16dp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:gravity="center"/>-->
+
+<!--        <FrameLayout-->
+<!--            android:layout_width="400dp"-->
+<!--            android:layout_height="400dp"-->
+<!--            android:layout_margin="8dp">-->
+<!--            <com.example.testlibrary.PinViewAddLocation-->
+<!--                android:id="@+id/imageMap"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/colorBlack"-->
+<!--                />-->
+<!--        </FrameLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textStep3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Step 3: Add the location name"-->
+<!--            android:textSize="16sp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:gravity="center"/>-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/editTextLocationName"-->
+<!--            android:layout_width="250dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:background="@drawable/edit_text_background"-->
+<!--            android:padding="8dp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:ems="10"-->
+<!--            android:inputType="textCapSentences"-->
+<!--            android:hint="Location name"/>-->
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/checkboxIsDestination"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:text="Show is on map as destination?" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="32dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:layout_marginBottom="32dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="Add"-->
+<!--                android:background="@drawable/button_blue"-->
+<!--                android:onClick="addLocation"/>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/button4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="32dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:layout_marginBottom="32dp"-->
+<!--                android:layout_marginEnd="32dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/button_red"-->
+<!--                android:text="Cancel"-->
+<!--                android:onClick="backToAdminMenu"/>-->
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+<!--</ScrollView>-->
+
+
+<!--</LinearLayout>-->

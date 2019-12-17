@@ -37,7 +37,7 @@ public class RatingActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rating = rating + " ,Rating : "+ ratingBar.getRating() + " ,Comment : " + etComment.getText().toString().trim();
+                rating = rating + " ,Rating : "+ (double)ratingBar.getRating() + " ,Comment : " + etComment.getText().toString().trim();
                 databaseReference.push().setValue(rating);
                 //Toast.makeText(RatingActivity.this, rating, Toast.LENGTH_LONG).show();
                 finish();
