@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
 
 public class AdminLandingPage extends AppCompatActivity {
 
@@ -52,14 +53,12 @@ public class AdminLandingPage extends AppCompatActivity {
             @Override
             public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
                 //Label is the name of the fragment
-                System.out.println(destination.getLabel());
+
                 //use the label to intent??
                 Intent intent = new Intent(getApplication(), AddLocation.class);
                 startActivity(intent);
             }
         };
-        navController.addOnDestinationChangedListener(changedListener);
-
     }
 
     @Override
