@@ -176,17 +176,16 @@ public class GenerateQRCode extends AppCompatActivity {
 //                sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
 //                        + "https://chart.googleapis.com/chart?cht=qr&chl=" + locationKeyList.get(i) + "&choe=UTF-8&chs=200x200\n\n");
                 URI uri = new URI(
+                        "http",
                         null,
-                        "127.0.0.1:8000",
-                        "/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i),
+                        "127.0.0.1",
+                        8000,
+                        "/qrcode/" + locationList.get(i).getName() + "/" + locationKeyList.get(i) + "/",
+                        "",
                         null);
-                String request = uri.toASCIIString();
-                System.out.println("----------------------");
-                System.out.println(request);
-                System.out.println("----------------------");
-                String locationNameEncoded = URLEncoder.encode(locationList.get(i).getName(), "utf-8");
+                String qrCodeUri = uri.toASCIIString();
                 sb.append("Please download the QR code of " + locationList.get(i).getName() + " using this link : "
-                        + "127.0.0.1:8000/qrcode/" + locationNameEncoded + "/" + locationKeyList.get(i) + "\n\n");
+                        + qrCodeUri + "\n\n");
             }
         }
         sb.append("\n\nSent from Navigator, \nadmin");
