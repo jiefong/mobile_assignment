@@ -1,5 +1,6 @@
 package com.example.testlibrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -7,7 +8,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -43,6 +47,19 @@ public class AdminLandingPage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        NavController.OnDestinationChangedListener changedListener = new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                //Label is the name of the fragment
+                System.out.println(destination.getLabel());
+                //use the label to intent??
+                Intent intent = new Intent(getApplication(), AddLocation.class);
+                startActivity(intent);
+            }
+        };
+        navController.addOnDestinationChangedListener(changedListener);
+
     }
 
     @Override
@@ -52,10 +69,13 @@ public class AdminLandingPage extends AppCompatActivity {
         return true;
     }
 
+    //this function is used to show the side drawer
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }
