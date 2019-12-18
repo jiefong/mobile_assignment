@@ -17,6 +17,7 @@
             android:name=".AdminDashboard"
             android:label="@string/title_activity_admin_landing_page"
             android:theme="@style/NoActionBar"></activity>
+        <activity android:name=".AdminLogout"/>
         <activity android:name=".QRCodeSample" />
         <activity android:name=".RatingActivity" />
         <activity android:name=".ChangePassword" />
