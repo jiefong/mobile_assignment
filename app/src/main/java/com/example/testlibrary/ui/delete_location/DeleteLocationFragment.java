@@ -1,25 +1,24 @@
-package com.example.testlibrary;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.testlibrary.ui.delete_location;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -27,6 +26,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.example.testlibrary.Connection;
+import com.example.testlibrary.LocationInfo;
+import com.example.testlibrary.MapObject;
+import com.example.testlibrary.PinView;
+import com.example.testlibrary.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +43,9 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteLocation extends AppCompatActivity {
+public class DeleteLocationFragment extends Fragment {
+
+    private DeleteLocationViewModel deleteLocationViewModel;
 
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
@@ -59,12 +65,13 @@ public class DeleteLocation extends AppCompatActivity {
     private LocationInfo  theItem = new LocationInfo();
     private String tempRemove;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_delete_location);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        deleteLocationViewModel =
+                ViewModelProviders.of(this).get(DeleteLocationViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_delete_location, container, false);
 
-        //setting up the database
+//setting up the database
         //define database & reference
         database = FirebaseDatabase.getInstance();
 
@@ -75,10 +82,10 @@ public class DeleteLocation extends AppCompatActivity {
         filteredList = new ArrayList<>();
         addedConnections = new ArrayList<>();
 
-        imageView = (PinView) findViewById(R.id.imageMap);
+        imageView = (PinView) root.findViewById(R.id.imageMap);
 
-        spinnerMap = (Spinner) findViewById(R.id.spinnerMap);
-        spinnerDeleteLocation = (Spinner) findViewById(R.id.spinnerDeleteLocation);
+        spinnerMap = (Spinner) root.findViewById(R.id.spinnerMap);
+        spinnerDeleteLocation = (Spinner) root.findViewById(R.id.spinnerDeleteLocation);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("mapObject");
         storageReference = FirebaseStorage.getInstance().getReference().child("map");
@@ -86,7 +93,7 @@ public class DeleteLocation extends AppCompatActivity {
         keyList = new ArrayList<>();
         mapList = new ArrayList<>();
 
-        Button btnDeleteLocation = (Button)findViewById(R.id.btnDeleteLocation);
+        Button btnDeleteLocation = (Button) root.findViewById(R.id.btnDeleteLocation);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -115,8 +122,8 @@ public class DeleteLocation extends AppCompatActivity {
                         locationKeyList.clear();
                         for (DataSnapshot userSnapShot : dataSnapshot.getChildren()) {
                             LocationInfo u = userSnapShot.getValue(LocationInfo.class);
-                                locationList.add(u);
-                                locationKeyList.add(userSnapShot.getKey());
+                            locationList.add(u);
+                            locationKeyList.add(userSnapShot.getKey());
                             //Create item based on the location list
                         }
                         setMarker();
@@ -198,9 +205,10 @@ public class DeleteLocation extends AppCompatActivity {
                     }
                 }
                 myRef.child(keyDeleteLocation).removeValue();
-                Toast.makeText(getApplicationContext(),"Location is deleted !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Location is deleted !",Toast.LENGTH_SHORT).show();
             }
         });
+        return root;
     }
 
     public void setMarker() {
@@ -242,7 +250,7 @@ public class DeleteLocation extends AppCompatActivity {
     }
 
     public void setAdapter() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, mapArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, mapArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMap.setAdapter(adapter);
 
@@ -299,7 +307,7 @@ public class DeleteLocation extends AppCompatActivity {
         }
 
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locationArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, locationArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDeleteLocation.setAdapter(adapter);
 
@@ -328,6 +336,8 @@ public class DeleteLocation extends AppCompatActivity {
     }
 
     public void goBackManage(View view) {
-        finish();
+
+        //do transaction change
+        return;
     }
 }

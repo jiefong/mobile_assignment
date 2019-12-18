@@ -1,16 +1,16 @@
-package com.example.testlibrary.ui.home;
+package com.example.testlibrary.ui.add_location;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class AddLocationViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public AddLocationViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is home fragment");
+        mText.setValue("This is add location fragment");
     }
 
     public LiveData<String> getText() {

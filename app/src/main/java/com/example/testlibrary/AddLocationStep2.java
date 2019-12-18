@@ -240,7 +240,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                                 public void onComplete(DatabaseError error, DatabaseReference ref) {
                                     if (error == null) {
                                         //TODO go to admin layout page
-                                        Intent intent = new Intent(getApplication(), AdminMenu.class);
+                                        Intent intent = new Intent(getApplication(), AdminDashboard.class);
                                         startActivity(intent);
                                         //go back to the main page
                                         //stimulate the whole network
@@ -253,7 +253,7 @@ public class AddLocationStep2 extends AppCompatActivity {
                         }
                     } else {
                         //TODO go to admin layout page
-                        Intent intent = new Intent(getApplication(), AdminMenu.class);
+                        Intent intent = new Intent(getApplication(), AdminDashboard.class);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "Location is added !", Toast.LENGTH_SHORT);
                     }

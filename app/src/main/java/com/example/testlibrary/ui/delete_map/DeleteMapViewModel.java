@@ -1,16 +1,16 @@
-package com.example.testlibrary.ui.tools;
+package com.example.testlibrary.ui.delete_map;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ToolsViewModel extends ViewModel {
+public class DeleteMapViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ToolsViewModel() {
+    public DeleteMapViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tools fragment");
+        mText.setValue("This is send fragment");
     }
 
     public LiveData<String> getText() {
