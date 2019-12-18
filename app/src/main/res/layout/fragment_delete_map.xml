@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.delete_map.DeleteMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -69,26 +70,13 @@
                 android:id="@+id/btnDeleteMap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="64dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="160dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="160dp"
                 android:background="@drawable/button_blue"
-                android:onClick="deleteMap"
                 android:text="Delete"
-                app:layout_constraintEnd_toStartOf="@+id/btnBackToManage2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
-
-            <Button
-                android:id="@+id/btnBackToManage2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="64dp"
-                android:background="@drawable/button_red"
-                android:onClick="goBackManage"
-                android:text="Back"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnDeleteMap"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

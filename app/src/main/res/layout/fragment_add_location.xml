@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.add_location.AddLocationFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -103,7 +105,7 @@
 
                     <Button
                         android:id="@+id/button3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="240dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="32dp"
                         android:layout_marginTop="32dp"
@@ -114,18 +116,6 @@
                         android:background="@drawable/button_blue"
                         android:onClick="addLocation"/>
 
-                    <Button
-                        android:id="@+id/button4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginTop="32dp"
-                        android:layout_marginBottom="32dp"
-                        android:layout_marginEnd="32dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/button_red"
-                        android:text="Cancel"
-                        android:onClick="backToAdminMenu"/>
                 </LinearLayout>
 
             </LinearLayout>

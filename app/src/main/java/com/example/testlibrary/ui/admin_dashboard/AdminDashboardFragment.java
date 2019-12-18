@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -190,7 +191,7 @@ public class AdminDashboardFragment extends Fragment {
             for (String s : ratingList) {
                 total += Double.parseDouble(s);
             }
-            tvRating.setText(String.format(".1f", total / ratingList.size()));
+            tvRating.setText(String.format("%.1f", (total / ratingList.size())));
         } else {
             tvRating.setText("0");
         }

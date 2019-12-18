@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.testlibrary.AddMap;
+import com.example.testlibrary.AdminLogin;
 import com.example.testlibrary.MapObject;
 import com.example.testlibrary.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,6 +50,7 @@ public class AddMapFragment extends Fragment {
     FrameLayout frameLayout;
     ImageView ivPreview;
     Bitmap selectedImage;
+    Button btnSelect, btnUpload, btnBack;
 
     private View root;
 
@@ -64,6 +67,22 @@ public class AddMapFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         etImageName = root.findViewById(R.id.editTextImageName);
         frameLayout = root.findViewById(R.id.frameLayout);
+        btnSelect = root.findViewById(R.id.btnSelect);
+        btnUpload = root.findViewById(R.id.btnUploadMap);
+
+        btnSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPickPhoto();
+            }
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
+            }
+        });
 
         return root;
 
@@ -72,7 +91,7 @@ public class AddMapFragment extends Fragment {
     public final static int PICK_PHOTO_CODE = 1046;
 
     // Trigger gallery selection for a photo
-    public void onPickPhoto(View view) {
+    public void onPickPhoto() {
         // Create intent for picking a photo from the gallery
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -101,7 +120,7 @@ public class AddMapFragment extends Fragment {
         }
     }
 
-    public void uploadImage(View v){
+    public void uploadImage(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setMessage("Are you sure you want to add this map?");
         alertDialogBuilder.setPositiveButton("Yes",
@@ -144,8 +163,10 @@ public class AddMapFragment extends Fragment {
         });
     }
 
-    public void goBackManage(View view) {
-
+    public void goBackManage() {
+//        Intent myIntent = new Intent(getContext(), AddMap.class);
+//        myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(myIntent);
 //        finish();
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class DeleteMapFragment extends Fragment {
     private ArrayList<String> keyList, locationKeyList;
     private String theKey, theUri;
     private String[] mapArray;
+    private Button btnDelete;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class DeleteMapFragment extends Fragment {
 
         imageView = root.findViewById(R.id.imageViewSelected);
         spinner = root.findViewById(R.id.spinner);
+        btnDelete = root.findViewById(R.id.btnDeleteMap);
 
         locationRef = FirebaseDatabase.getInstance().getReference().child("LocationList");
         connectionRef = FirebaseDatabase.getInstance().getReference().child("Connection");
@@ -136,11 +139,18 @@ public class DeleteMapFragment extends Fragment {
 
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteMap();
+            }
+        });
         return root;
     }
 
     public void setAdapter(){
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), android.R.layout.simple_spinner_item,mapArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item,mapArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -177,13 +187,7 @@ public class DeleteMapFragment extends Fragment {
         });
     }
 
-
-    public void goBackManage(View view) {
-        //go back to dashboard
-        return;
-    }
-
-    public void deleteMap(View view){
+    public void deleteMap(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setMessage("Are you sure you want to delete this map?");
         alertDialogBuilder.setPositiveButton("Yes",
