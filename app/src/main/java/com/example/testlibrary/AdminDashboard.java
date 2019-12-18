@@ -2,22 +2,25 @@ package com.example.testlibrary;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,10 +29,25 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 
 public class AdminDashboard extends AppCompatActivity {
 
+    private AppBarConfiguration mAppBarConfiguration;
+
+    //for dashboard uses
     private DatabaseReference databaseReference, locationRef, connectionRef, ratingRef;
     private StorageReference storageReference;
     private ImageView imageView;
@@ -42,12 +60,55 @@ public class AdminDashboard extends AppCompatActivity {
     private String theKey, theUri;
     private String[] mapArray;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_dashboard, R.id.nav_add_map, R.id.nav_delete_map,
+                R.id.nav_add_location, R.id.nav_delete_location, R.id.nav_generate_qr, R.id.nav_logout)
+                .setDrawerLayout(drawer)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
 
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                //Label is the name of the fragment
+                CharSequence destinationLabel = destination.getLabel();
+                Intent intent = new Intent(getApplicationContext(), AdminDashboard.class);
+                if (!destinationLabel.equals("Dashboard") && !destinationLabel.equals("Log Out")){
+                    if (destinationLabel.equals("Add Map"))
+                        intent = new Intent(getApplicationContext(), AddMap.class);
+                    else if (destinationLabel.equals("Delete Map"))
+                        intent = new Intent(getApplicationContext(), DeleteMap.class);
+                    else if (destinationLabel.equals("Add Location"))
+                        intent = new Intent(getApplicationContext(), AddLocation.class);
+                    else if (destinationLabel.equals("Delete Location"))
+                        intent = new Intent(getApplicationContext(), DeleteLocation.class);
+                    else if (destinationLabel.equals("Generate QR Code"))
+                        intent = new Intent(getApplicationContext(), GenerateQRCode.class);
+                    //use the label to intent??
+
+                    startActivity(intent);
+                }else{
+                    if(destinationLabel.equals("Log Out")){
+                        logoutDialog();
+                    }
+                }
+
+            }
+        });
+
+        //start of the codes for dashboard part
         imageView = findViewById(R.id.imageView);
         spinner = findViewById(R.id.spinner);
         tvMap = findViewById(R.id.map);
@@ -156,6 +217,24 @@ public class AdminDashboard extends AppCompatActivity {
         });
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    //this function is used to show the side drawer
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
+    }
+
+
+
+    //functions for dashboard views
     public void setInitial(){
         if(!mapList.isEmpty()) {
             tvMap.setText(Integer.toString(mapList.size()));
@@ -238,4 +317,31 @@ public class AdminDashboard extends AppCompatActivity {
         tvConnection.setText(Integer.toString(connectionNum));
     }
 
+    //for log out uses
+    public void logoutDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you sure you want to logout?");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Admin.getInstance().setUsername("");
+                        Admin.getInstance().setPassword("");
+                        Intent myIntent = new Intent(AdminDashboard.this, AdminLogin.class);
+                        startActivity(myIntent);
+                        finish();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }
