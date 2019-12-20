@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -45,6 +47,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +102,7 @@ public class AddLocationFragment extends Fragment {
         addButton = root.findViewById(R.id.button3);
 
         addButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 addLocation(view);
@@ -260,15 +264,19 @@ public class AddLocationFragment extends Fragment {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void addLocation(View v){
         boolean check = true;
 
         //Get Location name
         EditText ETLocationName = (EditText) root.findViewById(R.id.editTextLocationName);
         String locationName = ETLocationName.getText().toString();
-        if(locationName == null){
+
+        if(locationName.length() == 0){
             Toast.makeText(getContext(), "Please key in the location name", Toast.LENGTH_SHORT).show();
             check = false;
+        }else{
+            System.out.println("-------------------");
         }
 
         //get the pin
@@ -298,6 +306,7 @@ public class AddLocationFragment extends Fragment {
         CheckBox checkBoxIsDestination = (CheckBox) root.findViewById(R.id.checkboxIsDestination);
         boolean isDestination = checkBoxIsDestination.isChecked();
 
+        check = false;
         if(check){
             Toast.makeText(getContext(), "complete", Toast.LENGTH_SHORT);
             Intent intent = new Intent(getActivity(), AddLocationStep2.class);

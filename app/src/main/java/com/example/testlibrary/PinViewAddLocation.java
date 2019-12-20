@@ -2,16 +2,19 @@ package com.example.testlibrary;
 
 import android.content.Context;
 import android.graphics.*;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class PinViewAddLocation extends SubsamplingScaleImageView implements OnTouchListener {
@@ -54,14 +57,19 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public PointF getPoint(){
         int width = this.getWidth();
         int height = this.getHeight();
 
-        float vX = ((vStart.x/width)*image_width);
-        float vY = ((vStart.y/height)*image_height);
-        hold = new PointF(vX, vY);
-        return viewToSourceCoord(hold);
+        if(!(vStart == null)){
+            float vX = ((vStart.x/width)*image_width);
+            float vY = ((vStart.y/height)*image_height);
+            hold = new PointF(vX, vY);
+            return viewToSourceCoord(hold);
+        }else{
+            return null;
+        }
     }
 
     private void initialise() {
@@ -225,6 +233,10 @@ public class PinViewAddLocation extends SubsamplingScaleImageView implements OnT
 
     public void setMarker(List<LocationInfo> locationList){
         markers = locationList;
+    }
+
+    public static boolean isNull(Object obj) {
+        return obj == null;
     }
 
 }
